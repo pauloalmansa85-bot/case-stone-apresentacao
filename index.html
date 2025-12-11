@@ -148,8 +148,8 @@
                     <span class="font-bold text-xs text-stone-green">CD</span>
                 </div>
                 <div>
-                    <p class="text-sm font-bold text-white">Candidato</p>
-                    <p class="text-xs text-gray-400">Processo Seletivo</p>
+                    <p class="text-sm font-bold text-white">Paulo</p>
+                    <p class="text-xs text-gray-400">Data Scientist</p>
                 </div>
             </div>
         </div>
@@ -272,9 +272,9 @@
                             </div>
                             
                             <div class="bg-[#151515] p-4 rounded-xl border-l-2 border-stone-green">
-                                <h4 class="font-bold text-white mb-1">A Escolha do Número 194</h4>
+                                <h4 class="font-bold text-white mb-1">Feature Engineering (O Segredo)</h4>
                                 <p class="text-sm text-gray-400 leading-relaxed">
-                                    Se usássemos um corte padrão de 50%, pegaríamos <strong>610 transações</strong>, mas bloquearíamos muitos clientes bons. Ao subir o sarrafo para <strong>87% de certeza</strong>, focamos apenas nas <strong>194 transações</strong> que são ataques robóticos óbvios.
+                                    A variável chave criada foi o <code>delta_t</code> (tempo desde a última transação). Ela isolou o comportamento robótico com precisão.
                                 </p>
                             </div>
                         </div>
@@ -343,15 +343,31 @@
                         </p>
                     </div>
 
-                    <!-- Resultado Aba 2 -->
-                     <div class="stone-card p-8 rounded-2xl text-center relative overflow-hidden group border-t-4 border-red-500">
+                    <!-- Resultado Aba 2 (STORYTELLING 610 VS 194) -->
+                     <div class="stone-card p-8 rounded-2xl relative overflow-hidden group border-t-4 border-red-500">
                         <div class="absolute top-0 left-0 w-full h-full bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Resultado: Aba 2 (Futuro)</p>
-                        <div class="text-7xl font-bold text-white mb-2 group-hover:scale-110 transition-transform">194</div>
-                        <p class="text-red-400 font-bold text-lg">Transações Bloqueadas</p>
-                        <div class="mt-6 pt-6 border-t border-[#333]">
+                        
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 text-center">Funil de Decisão (Aba 2)</h3>
+                        
+                        <div class="flex items-center justify-between mb-6 relative z-10 px-4">
+                            <div class="text-center opacity-50">
+                                <p class="text-2xl font-bold text-white">610</p>
+                                <p class="text-[10px] text-gray-400">Suspeitos (>50%)</p>
+                            </div>
+                            <div class="flex-1 h-px bg-gray-700 mx-4 relative">
+                                <i data-lucide="arrow-right" class="absolute -top-2 left-1/2 -ml-2 text-gray-600 w-4 h-4"></i>
+                            </div>
+                            <div class="text-center transform scale-110">
+                                <p class="text-5xl font-bold text-stone-green">194</p>
+                                <p class="text-xs text-stone-green font-bold">Bloqueios Reais (>87%)</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-[#333] text-left">
                             <p class="text-xs text-gray-400 leading-relaxed">
-                                Identificamos 194 transações com probabilidade altíssima (>87%) de serem o mesmo ataque de robôs voltando a acontecer.
+                                <strong class="text-white">A Lógica da Decisão:</strong><br>
+                                O modelo detectou <strong>610 transações</strong> com algum sinal de risco. Porém, bloquear todas causaria um prejuízo de R$ 373 mil em vendas legítimas.<br><br>
+                                Ao refinar o corte para <strong>87% de certeza</strong>, focamos apenas nas <strong>194 transações críticas</strong> (ataques robóticos óbvios), garantindo o lucro máximo sem prejudicar clientes.
                             </p>
                         </div>
                     </div>
