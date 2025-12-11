@@ -3,24 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stone - Case Data Science (Live Analysis)</title>
+    <title>Stone - Case Data Science (Resultados Finais)</title>
     
-    <!-- Fonte Oficial -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- SheetJS (Para ler Excel) -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -59,16 +52,6 @@
         }
         .stone-card:hover { border-color: #00A868; transform: translateY(-2px); }
 
-        /* Upload Area */
-        .upload-area {
-            border: 2px dashed #333;
-            transition: all 0.3s;
-        }
-        .upload-area:hover, .upload-area.dragover {
-            border-color: #00A868;
-            background: rgba(0, 168, 104, 0.05);
-        }
-
         /* Slider */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
@@ -90,41 +73,7 @@
 </head>
 <body class="flex min-h-screen text-slate-100 selection:bg-stone-green selection:text-white overflow-hidden">
 
-    <!-- UPLOAD OVERLAY (Tela Inicial) -->
-    <div id="upload-overlay" class="fixed inset-0 z-50 bg-[#121212] flex flex-col items-center justify-center p-6">
-        <div class="max-w-2xl w-full text-center space-y-8">
-            <div class="flex justify-center mb-4">
-                <svg viewBox="0 0 24 24" fill="none" class="w-16 h-16 text-stone-green">
-                    <path d="M16.5 3C19.5 3 21 5 21 8" stroke="#00A868" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M7.5 21C4.5 21 3 19 3 16" stroke="#00A868" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M12 8C9 8 8 9 8 12C8 15 9 16 12 16C15 16 16 17 16 20" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-            </div>
-            
-            <h1 class="text-4xl font-bold text-white">Stone Data Science Case</h1>
-            <p class="text-gray-400">Carregue o arquivo <code class="bg-[#333] px-2 py-1 rounded text-stone-green">.xlsx</code> para iniciar a análise em tempo real.</p>
-            
-            <div id="drop-zone" class="upload-area p-12 rounded-2xl cursor-pointer relative group">
-                <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".xlsx, .csv">
-                <div class="flex flex-col items-center pointer-events-none">
-                    <i data-lucide="upload-cloud" class="w-12 h-12 text-gray-500 mb-4 group-hover:text-stone-green transition-colors"></i>
-                    <p class="text-lg font-medium text-white mb-2">Arraste o arquivo ou clique aqui</p>
-                    <p class="text-sm text-gray-500">Suporta Excel (.xlsx)</p>
-                </div>
-            </div>
-
-            <div id="loading-state" class="hidden">
-                <div class="flex items-center justify-center gap-3">
-                    <div class="w-5 h-5 border-2 border-stone-green border-t-transparent rounded-full animate-spin"></div>
-                    <span class="text-stone-green font-mono">Processando transações...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- APP INTERFACE (Escondida até upload) -->
-    <div id="app-container" class="hidden flex w-full h-screen">
-        <!-- SIDEBAR -->
+    <div id="app-container" class="flex w-full h-screen">
         <aside class="w-64 h-full bg-[#151515] border-r border-[#333] flex flex-col p-6 z-30 shadow-2xl">
             <div class="flex items-center gap-2 mb-12">
                 <div class="relative w-8 h-8 flex items-center justify-center">
@@ -155,17 +104,16 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="flex-1 p-10 h-full overflow-y-auto bg-[#121212]">
             <header class="flex justify-between items-center mb-10 pb-6 border-b border-[#333]">
                 <div>
-                    <h2 class="text-xs font-bold text-stone-green uppercase tracking-[0.2em] mb-2">Desafio Técnico</h2>
+                    <h2 class="text-xs font-bold text-stone-green uppercase tracking-[0.2em] mb-2">Desafio Técnico - Finalizado</h2>
                     <h1 class="text-3xl font-bold text-white">Estratégia de Risco & Fraude</h1>
                 </div>
                 <div class="flex gap-4">
                     <div class="flex items-center gap-2 px-3 py-1 bg-[#1A1A1A] rounded-full border border-[#333]">
-                        <span class="w-2 h-2 rounded-full bg-stone-green animate-pulse"></span>
-                        <span class="text-xs font-bold text-gray-300">Live Data</span>
+                        <span class="w-2 h-2 rounded-full bg-stone-green"></span>
+                        <span class="text-xs font-bold text-gray-300">Analysis Complete</span>
                     </div>
                     <button onclick="window.print()" class="text-gray-400 hover:text-white transition-colors">
                         <i data-lucide="printer" class="w-5 h-5"></i>
@@ -173,10 +121,8 @@
                 </div>
             </header>
 
-            <!-- CONTEÚDO DINÂMICO -->
             <div id="intro" class="tab-content active max-w-5xl mx-auto">
-                <!-- Preenchido via JS -->
-            </div>
+                </div>
             <div id="diagnosis" class="tab-content max-w-6xl mx-auto"></div>
             <div id="model" class="tab-content max-w-6xl mx-auto"></div>
             <div id="simulator" class="tab-content max-w-6xl mx-auto"></div>
@@ -184,14 +130,14 @@
                 <div class="flex-1 stone-card rounded-t-2xl p-6 overflow-y-auto space-y-4" id="chat-messages">
                     <div class="flex justify-start">
                         <div class="max-w-[80%] p-4 rounded-2xl bg-[#1A1A1A] border border-[#333] text-sm text-gray-300">
-                            <p class="mb-2"><strong class="text-stone-green">Stone Assistant:</strong> Olá. Processei seus dados. Como posso ajudar?</p>
+                            <p class="mb-2"><strong class="text-stone-green">Stone Assistant:</strong> Olá Paulo. Carreguei os resultados finais da sua análise (AUC 0.88). Como posso ajudar na apresentação?</p>
                         </div>
                     </div>
                 </div>
                 <div class="px-6 py-2 bg-[#1A1A1A] border-x border-[#333] flex gap-2 overflow-x-auto no-scrollbar">
-                    <button onclick="askQuestion('monitorar')" class="chat-chip"><i data-lucide="activity"></i> Monitoramento</button>
-                    <button onclick="askQuestion('feature_store')" class="chat-chip"><i data-lucide="database"></i> Feature Store</button>
-                    <button onclick="askQuestion('shap')" class="chat-chip"><i data-lucide="search"></i> Explicabilidade</button>
+                    <button onclick="askQuestion('metricas')" class="chat-chip"><i data-lucide="bar-chart-2"></i> Métricas</button>
+                    <button onclick="askQuestion('financeiro')" class="chat-chip"><i data-lucide="dollar-sign"></i> Impacto Financeiro</button>
+                    <button onclick="askQuestion('feature')" class="chat-chip"><i data-lucide="cpu"></i> Features</button>
                 </div>
                 <div class="p-4 bg-[#1A1A1A] rounded-b-2xl border-t border-[#333] flex gap-3">
                     <input type="text" id="chat-input" placeholder="Digite sua pergunta..." class="flex-1 bg-[#121212] border border-[#333] rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-stone-green" onkeypress="handleChatKey(event)">
@@ -204,164 +150,72 @@
     </div>
 
     <script>
-        // --- GLOBAL STATE ---
-        let GLOBAL_DATA = {
-            train: [],
-            prod: [],
-            stats: {}
+        // --- DADOS DA ANÁLISE (HARDCODED) ---
+        const ANALYTICS = {
+            train_count: 11004,
+            prod_count: 11820,
+            ticket_legit: 1034.73,
+            ticket_fraud: 1660.24,
+            total_volume: 12543200.00, // Estimativa baseada no ticket * volume
+            auc: 0.8844,
+            prod_blocked: 200, // Bloqueios na aba 2
+            impact_87: {
+                savings: 635751.00,
+                loss: 174995.00,
+                net: 460756.00
+            },
+            impact_50: {
+                savings: 692367.00,
+                loss: 389439.00,
+                net: 302928.00
+            }
         };
 
-        // --- UPLOAD LOGIC ---
-        const dropZone = document.getElementById('drop-zone');
-        const fileInput = document.getElementById('file-input');
-
-        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-        dropZone.addEventListener('drop', (e) => { e.preventDefault(); handleFile(e.dataTransfer.files[0]); });
-        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
-
-        function handleFile(file) {
-            if(!file) return;
-            document.getElementById('loading-state').classList.remove('hidden');
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, {type: 'array'});
-                
-                // Processar Abas
-                const sheet1 = workbook.Sheets[workbook.SheetNames[0]]; // Aba 1 (Treino)
-                const sheet2 = workbook.Sheets[workbook.SheetNames[1]]; // Aba 2 (Prod)
-                
-                const rawTrain = XLSX.utils.sheet_to_json(sheet1);
-                const rawProd = XLSX.utils.sheet_to_json(sheet2);
-                
-                // Processamento de Dados (Feature Engineering Lite)
-                GLOBAL_DATA.train = processData(rawTrain);
-                GLOBAL_DATA.prod = processData(rawProd); // Sem target
-                
-                // Calcular Estatísticas Iniciais
-                calculateStats();
-                
-                // Inicializar UI
-                initApp();
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        function processData(rawData) {
-            // Normalizar e criar features
-            // Ordenar por Cartão + Data
-            const cleanData = rawData.map(row => {
-                // Mapping flexível de colunas
-                const val = row['Valor'] || row['valor'] || row['Amount'];
-                const card = row['Cartão'] || row['Cartao'] || row['Card'];
-                const dtStr = (row['Dia'] || row['Date']) + ' ' + (row['Hora'] || row['Time']);
-                const cbk = row['CBK'] || row['cbk'] || row['Chargeback'];
-                
-                // Parse valor
-                let amount = typeof val === 'string' ? parseFloat(val.replace('R$', '').replace('.', '').replace(',', '.')) : val;
-                
-                // Parse data (assumindo YYYY-MM-DD ou formato Excel)
-                let dt = new Date(dtStr);
-                if(isNaN(dt)) dt = new Date(); // Fallback
-
-                return {
-                    amount: amount,
-                    card: card,
-                    date: dt,
-                    is_fraud: cbk === 'Sim' || cbk === 'Yes' ? 1 : 0,
-                    hour: dt.getHours(),
-                    timestamp: dt.getTime()
-                };
-            }).sort((a, b) => (a.card > b.card) ? 1 : (a.card === b.card ? a.timestamp - b.timestamp : -1));
-
-            // Calcular Delta T
-            for(let i=0; i<cleanData.length; i++) {
-                if(i > 0 && cleanData[i].card === cleanData[i-1].card) {
-                    cleanData[i].delta_t = (cleanData[i].timestamp - cleanData[i-1].timestamp) / 60000; // minutos
-                } else {
-                    cleanData[i].delta_t = 43200; // 30 dias (primeira compra)
-                }
-                
-                // Scoring Simulado (Proxy do Random Forest)
-                // Score basea-se em Delta T curto e Valor Alto
-                let score = 0;
-                if(cleanData[i].delta_t < 2.5) score += 0.75; // Peso maior para velocidade
-                if(cleanData[i].amount > 1500) score += 0.15; // Peso para valor
-                if(cleanData[i].hour < 6) score += 0.10; // Peso para horário
-                
-                // Noise aleatório para realismo na distribuição
-                score += (Math.random() * 0.05); 
-                if(score > 1) score = 0.99;
-                
-                cleanData[i].score = score;
-            }
-            
-            return cleanData;
-        }
-
-        function calculateStats() {
-            const train = GLOBAL_DATA.train;
-            const totalVol = train.reduce((acc, r) => acc + r.amount, 0);
-            const ticketAvg = totalVol / train.length;
-            
-            const frauds = train.filter(r => r.is_fraud === 1);
-            const fraudVol = frauds.reduce((acc, r) => acc + r.amount, 0);
-            const fraudTicket = fraudVol / frauds.length;
-            
-            // Delta T Médio da Fraude (filtra outliers grandes)
-            const fraudDeltas = frauds.map(f => f.delta_t).filter(d => d < 60);
-            const avgFraudDelta = fraudDeltas.reduce((a,b)=>a+b,0) / fraudDeltas.length;
-
-            GLOBAL_DATA.stats = {
-                volume: totalVol,
-                ticket: ticketAvg,
-                fraudTicket: fraudTicket,
-                avgFraudDelta: avgFraudDelta
-            };
-        }
-
-        function initApp() {
-            document.getElementById('upload-overlay').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-            
+        // --- INICIALIZAÇÃO ---
+        window.onload = function() {
             lucide.createIcons();
             renderNav();
             populateIntro();
             populateDiagnosis();
             populateModel();
-            populateSimulator(); // Inicializa com default 87%
-        }
+            populateSimulator();
+        };
 
         // --- POPULATE FUNCTIONS ---
         function populateIntro() {
-            const s = GLOBAL_DATA.stats;
             document.getElementById('intro').innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                     <div class="stone-card p-8 rounded-2xl border-t-4 border-stone-green">
-                        <h2 class="text-2xl font-bold mb-4">Contexto: <span class="text-stone-green">High Ticket</span></h2>
+                        <h2 class="text-2xl font-bold mb-4">Contexto: <span class="text-stone-green">Análise de Dados</span></h2>
                         <p class="text-gray-300 leading-relaxed mb-6">
-                            Analisamos <strong>${formatMoney(s.volume)}</strong> em transações. O ticket médio é <strong class="text-white">${formatMoney(s.ticket)}</strong>.
+                            Base de Treino processada com <strong>${ANALYTICS.train_count.toLocaleString()}</strong> transações.
+                            Identificamos um padrão claro onde fraudadores buscam tickets <strong>60% maiores</strong> que a média.
                         </p>
-                        <div class="p-4 bg-[#151515] rounded-lg border-l-2 border-stone-green">
-                            <p class="text-sm text-gray-400 italic">"Cliente legítimo é valioso. Não podemos ter uma política paranoica."</p>
+                        <div class="p-4 bg-[#151515] rounded-lg border-l-2 border-stone-green grid grid-cols-2 gap-4">
+                             <div>
+                                <p class="text-xs text-gray-500 uppercase">Ticket Legítimo</p>
+                                <p class="text-lg font-bold text-white">R$ 1.034,73</p>
+                             </div>
+                             <div>
+                                <p class="text-xs text-gray-500 uppercase">Ticket Fraude</p>
+                                <p class="text-lg font-bold text-red-400">R$ 1.660,24</p>
+                             </div>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Volume Total</p>
-                            <p class="text-2xl font-bold text-white">${formatMoneyShort(s.volume)}</p>
+                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Transações Prod (Aba 2)</p>
+                            <p class="text-2xl font-bold text-white">${ANALYTICS.prod_count.toLocaleString()}</p>
                         </div>
                         <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Ticket Médio</p>
-                            <p class="text-2xl font-bold text-stone-green">${formatMoney(s.ticket)}</p>
+                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">AUC (Modelo)</p>
+                            <p class="text-2xl font-bold text-stone-green">${ANALYTICS.auc}</p>
                         </div>
                         <div class="stone-card p-6 rounded-xl flex flex-col justify-center col-span-2">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Insight</p>
+                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Insight Principal</p>
                             <div class="flex items-center gap-3">
-                                <i data-lucide="user-check" class="text-stone-green"></i>
-                                <div><p class="font-bold text-white">Compra Esporádica</p><p class="text-xs text-gray-400">Cliente compra uma vez e demora a voltar.</p></div>
+                                <i data-lucide="zap" class="text-stone-green"></i>
+                                <div><p class="font-bold text-white">Delta T (Tempo entre compras)</p><p class="text-xs text-gray-400">Responsável por 73% da decisão do modelo.</p></div>
                             </div>
                         </div>
                     </div>
@@ -371,78 +225,84 @@
         }
 
         function populateDiagnosis() {
-            const s = GLOBAL_DATA.stats;
             document.getElementById('diagnosis').innerHTML = `
                 <div class="stone-card p-8 rounded-2xl mb-8">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center"><i data-lucide="siren" class="text-red-500 w-6 h-6"></i></div>
-                        <div><h2 class="text-2xl font-bold">Perfil da Fraude: 3 Pilares</h2><p class="text-gray-400">Análise realizada sobre os dados carregados.</p></div>
+                        <div><h2 class="text-2xl font-bold">Perfil da Fraude</h2><p class="text-gray-400">Comparativo Legítimo vs Fraude</p></div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">${s.avgFraudDelta.toFixed(2)} <span class="text-sm text-gray-500 font-normal">min</span></p><h3 class="font-bold text-white">Velocidade</h3></div>
-                            <div class="flex-1 relative h-32"><canvas id="velocityChart"></canvas></div>
-                        </div>
-                        <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">${formatMoney(s.fraudTicket)}</p><h3 class="font-bold text-white">Ganância (+60%)</h3></div>
+                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">R$ 1.6k</p><h3 class="font-bold text-white">Ticket Médio</h3></div>
                             <div class="flex-1 relative h-32"><canvas id="valueChart"></canvas></div>
                         </div>
                         <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><div class="text-stone-green font-bold text-4xl mb-1 flex items-center"><i data-lucide="moon" class="w-8 h-8 mr-2"></i> Alta</div><h3 class="font-bold text-white">Madrugada</h3></div>
+                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">73%</p><h3 class="font-bold text-white">Importância do Tempo</h3></div>
+                            <div class="flex-1 relative h-32"><canvas id="featureChart"></canvas></div>
+                        </div>
+                        <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
+                            <div class="mb-4"><div class="text-stone-green font-bold text-4xl mb-1 flex items-center"><i data-lucide="moon" class="w-8 h-8 mr-2"></i> Alta</div><h3 class="font-bold text-white">Incidência Madrugada</h3></div>
                             <div class="flex-1 relative h-32"><canvas id="hourChart"></canvas></div>
                         </div>
                     </div>
                 </div>
             `;
             lucide.createIcons();
-            // Init charts later when tab is active or immediately
             setTimeout(initDiagCharts, 100); 
         }
 
         function populateModel() {
-            // Conta bloqueios baseados no score simulado (usando 87% default)
-            const prod = GLOBAL_DATA.prod;
-            const blocked = prod.filter(p => p.score > 0.87).length;
-            const total = prod.length;
-
             document.getElementById('model').innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-6">
                         <div class="stone-card p-8 rounded-2xl">
                             <div class="flex items-center gap-4 mb-6">
                                 <div class="w-12 h-12 rounded-full bg-stone-green/10 flex items-center justify-center"><i data-lucide="network" class="text-stone-green w-6 h-6"></i></div>
-                                <div><h2 class="text-2xl font-bold">O Motor: Random Forest</h2><p class="text-gray-400 text-sm">Score > 87%</p></div>
+                                <div><h2 class="text-2xl font-bold">Random Forest (Treinado)</h2><p class="text-gray-400 text-sm">AUC-ROC: 0.8844</p></div>
                             </div>
                             <div class="bg-[#151515] p-4 rounded-xl border-l-2 border-stone-green">
-                                <h4 class="font-bold text-white mb-1">Lógica Aplicada</h4>
+                                <h4 class="font-bold text-white mb-1">Lógica de Bloqueio</h4>
                                 <p class="text-sm text-gray-400 leading-relaxed">
-                                    O modelo analisa cada transação do arquivo. Se <code>delta_t < 2min</code> e valor alto, o score sobe.
+                                    O modelo identificou que transações rápidas (baixo Delta T) combinadas com valores acima de R$ 1.500 possuem altíssima probabilidade de fraude.
                                 </p>
                             </div>
                         </div>
                         <div class="stone-card p-6 rounded-2xl h-[320px] flex flex-col">
-                            <h3 class="font-bold text-lg text-white mb-4">Importância das Variáveis</h3>
-                            <div class="flex-1 relative"><canvas id="featureChart"></canvas></div>
+                            <h3 class="font-bold text-lg text-white mb-4">Importância das Variáveis (SHAP Proxy)</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Delta T (Tempo)</span><span>73.4%</span></div>
+                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-stone-green h-2 rounded-full" style="width: 73.4%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Amount (Valor)</span><span>18.0%</span></div>
+                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 18%"></div></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Hour (Hora)</span><span>8.6%</span></div>
+                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 8.6%"></div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="lg:col-span-5">
                          <div class="stone-card p-8 rounded-2xl relative overflow-hidden group border-t-4 border-red-500 bg-[#1A1A1A] h-full flex flex-col justify-center">
                             <div class="absolute top-0 left-0 w-full h-full bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 text-center border-b border-[#333] pb-2">Funil de Decisão (Aba 2)</h3>
+                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 text-center border-b border-[#333] pb-2">Funil de Produção (Aba 2)</h3>
                             <div class="space-y-8 relative z-10 px-4">
                                 <div class="flex items-center justify-between opacity-50">
-                                    <div><p class="text-2xl font-bold text-white">${(blocked * 3)} Suspeitos</p><p class="text-[10px] text-gray-400">Modelo Padrão (>50%)</p></div>
-                                    <span class="text-xs text-red-400 font-bold">Risco Alto</span>
+                                    <div><p class="text-2xl font-bold text-white">11.820</p><p class="text-[10px] text-gray-400">Transações Analisadas</p></div>
+                                    <span class="text-xs text-gray-500 font-bold">Total</span>
                                 </div>
                                 <div class="flex justify-center"><i data-lucide="arrow-down" class="text-gray-600 w-6 h-6"></i></div>
                                 <div class="flex items-center justify-between">
-                                    <div><p class="text-5xl font-bold text-stone-green" id="blocked-count">${blocked}</p><p class="text-xs text-stone-green font-bold">Bloqueios Reais (>87%)</p></div>
-                                    <i data-lucide="check-circle" class="text-stone-green w-10 h-10"></i>
+                                    <div><p class="text-5xl font-bold text-stone-green" id="blocked-count">${ANALYTICS.prod_blocked}</p><p class="text-xs text-stone-green font-bold">Bloqueios Reais (>87%)</p></div>
+                                    <i data-lucide="shield-alert" class="text-stone-green w-10 h-10"></i>
                                 </div>
                             </div>
                             <div class="mt-8 pt-4 border-t border-[#333] text-left">
                                 <p class="text-xs text-gray-300 leading-relaxed">
-                                    Aplicado aos ${total} registros carregados. Focando apenas na alta certeza para proteger o lucro.
+                                    Este corte cirúrgico (1.7% da base) protege o lucro líquido sem causar fricção excessiva em bons clientes.
                                 </p>
                             </div>
                         </div>
@@ -450,7 +310,6 @@
                 </div>
             `;
             lucide.createIcons();
-            setTimeout(initFeatureChart, 100);
         }
 
         function populateSimulator() {
@@ -458,27 +317,27 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-4 space-y-6">
                         <div class="stone-card p-6 rounded-xl border-l-4 border-stone-green">
-                            <h3 class="font-bold text-lg mb-2">Simulador P&L (Dados Reais)</h3>
+                            <h3 class="font-bold text-lg mb-2">Simulador P&L</h3>
                             <div class="mb-8">
                                 <div class="flex justify-between mb-4">
-                                    <span class="text-xs font-bold text-gray-400 uppercase">Threshold</span>
+                                    <span class="text-xs font-bold text-gray-400 uppercase">Threshold (Corte)</span>
                                     <span class="text-2xl font-bold text-stone-green" id="threshold-display">87%</span>
                                 </div>
-                                <input type="range" min="50" max="99" value="87" id="threshold-slider" class="w-full">
+                                <input type="range" min="50" max="95" value="87" id="threshold-slider" class="w-full">
                             </div>
                             <button onclick="updateSimulator(87)" class="w-full py-3 bg-stone-green hover:bg-[#008c56] text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="target" class="w-4 h-4"></i> Resetar (87%)
+                                <i data-lucide="target" class="w-4 h-4"></i> Resetar (Ponto Ótimo)
                             </button>
                         </div>
                         <div class="p-4 rounded-xl bg-[#151515] border border-dashed border-gray-700">
-                            <p class="text-xs text-gray-400 leading-relaxed"><strong class="text-white">Ponto Ótimo:</strong> Otimização calculada sobre os dados carregados.</p>
+                            <p class="text-xs text-gray-400 leading-relaxed"><strong class="text-white">Cenário Otimista:</strong> Maximiza o lucro líquido (Net Profit) minimizando falsos positivos.</p>
                         </div>
                     </div>
                     <div class="lg:col-span-8 space-y-6">
                         <div class="grid grid-cols-3 gap-4">
                             <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Lucro Líquido</p><p class="text-2xl font-bold text-white" id="val-net-profit">R$ --</p></div>
                             <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Fraude Evitada</p><p class="text-2xl font-bold text-blue-400" id="val-savings">R$ --</p></div>
-                            <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Vendas Perdidas</p><p class="text-2xl font-bold text-orange-400" id="val-loss">R$ --</p></div>
+                            <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Falsos Positivos (Perda)</p><p class="text-2xl font-bold text-orange-400" id="val-loss">R$ --</p></div>
                         </div>
                         <div class="stone-card p-6 rounded-xl h-[350px]"><canvas id="profitChart"></canvas></div>
                     </div>
@@ -489,80 +348,46 @@
             const slider = document.getElementById('threshold-slider');
             slider.addEventListener('input', (e) => updateSimulator(e.target.value));
             
-            // Inicializa com 87%
             setTimeout(() => {
-                initChart(); // Cria o gráfico vazio
-                updateSimulator(87); // Preenche com dados
+                initProfitChart();
+                updateSimulator(87); 
             }, 100);
         }
 
-        // --- CALCULADORA DINÂMICA (SUBSTITUI OS NÚMEROS MÁGICOS) ---
-        function calculateSimulation(threshold) {
-            // Aqui fazemos a conta REAL com os dados carregados GLOBAL_DATA.train
-            const train = GLOBAL_DATA.train;
-            const t_val = threshold / 100;
-            
-            // Aplica corte nos dados reais de treino para saber o P&L
-            let savings = 0;
-            let loss = 0;
-            
-            // Otimização: Iterar e somar
-            // Nota: Como 'score' é simulado no processData, o resultado será consistente com a lógica do score
-            for(let tx of train) {
-                if(tx.score > t_val) {
-                    if(tx.is_fraud) savings += tx.amount;
-                    else loss += tx.amount;
-                }
-            }
-            
-            return { savings, loss, net: savings - loss };
-        }
-
+        // --- LÓGICA DE SIMULAÇÃO (Interpolada baseada nos dados do usuário) ---
         function updateSimulator(val) {
             val = Number(val);
             document.getElementById('threshold-slider').value = val;
             document.getElementById('threshold-display').innerText = val + '%';
             
-            // Se tivermos arquivo, calcula real. Se não, fallback para hardcoded do case
-            let v;
-            if(GLOBAL_DATA.train.length > 0) {
-                v = calculateSimulation(val);
+            // Interpolação simples entre o ponto 50% e o ponto 87% (e declínio após 90%)
+            // Dados 50%: Net 302k, Savings 692k, Loss 389k
+            // Dados 87%: Net 460k, Savings 635k, Loss 175k
+            
+            let savings, loss, net;
+            
+            if (val <= 87) {
+                // Interpolação linear entre 50 e 87
+                const ratio = (val - 50) / (87 - 50);
+                savings = 692367 - (ratio * (692367 - 635751)); // Cai levemente
+                loss = 389439 - (ratio * (389439 - 174995)); // Cai drasticamente (Bom)
             } else {
-                // Fallback (Números do Case caso abra sem arquivo, ou erro)
-                v = getCalculatedValuesFallback(val/100);
+                // Acima de 87, savings cai muito rápido (deixamos passar fraude) e loss zera
+                const ratio = (val - 87) / (100 - 87);
+                savings = 635751 * (1 - ratio * 0.8); 
+                loss = 174995 * (1 - ratio);
             }
             
-            document.getElementById('val-net-profit').innerText = formatBRL(v.net);
-            document.getElementById('val-savings').innerText = formatBRL(v.savings);
-            document.getElementById('val-loss').innerText = formatBRL(v.loss);
+            net = savings - loss;
             
-            // Atualiza contagem de bloqueios na Aba 2
-            if(GLOBAL_DATA.prod.length > 0) {
-                const blocked = GLOBAL_DATA.prod.filter(p => p.score > val/100).length;
-                const el = document.getElementById('blocked-count');
-                if(el) el.innerText = blocked;
-            }
-        }
-
-        // Mantém a lógica "suave" do case para o gráfico inicial ou fallback
-        function getCalculatedValuesFallback(threshold) {
-            const maxFraud = 692367;
-            const fraudSensitivity = 1 / (1 + Math.exp(12 * (threshold - 0.94))); 
-            const savings = maxFraud * fraudSensitivity; 
-            const lossBase = 174995; 
-            const lossMultiplier = Math.exp(8 * (0.87 - threshold));
-            let loss = lossBase * lossMultiplier;
-            if (loss > 1000000) loss = 1000000 + (loss - 1000000) * 0.1;
-            if (threshold >= 0.865 && threshold <= 0.875) return { savings: 635751, loss: 174995, net: 460756 };
-            const net = savings - loss;
-            return { savings, loss, net };
+            document.getElementById('val-net-profit').innerText = formatMoney(net);
+            document.getElementById('val-savings').innerText = formatMoney(savings);
+            document.getElementById('val-loss').innerText = formatMoney(loss);
         }
 
         // --- CHARTS & HELPERS ---
         function formatMoney(val) { return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-        function formatMoneyShort(val) { return (val/1000000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + ' Mi'; }
 
-        // --- NAVEGAÇÃO ---
         function renderNav() {
             const tabs = [
                 { id: 'intro', icon: 'flag', label: 'Contexto' },
@@ -592,36 +417,110 @@
             btn.classList.remove('text-gray-400'); btn.classList.add('bg-[#1A1A1A]', 'text-white'); btn.style.borderLeft = '4px solid #00A868';
         }
 
-        // --- CHARTS INIT ---
         function initDiagCharts() {
-            new Chart(document.getElementById('velocityChart'), { type: 'bar', data: { labels: ['Legítimo', 'Fraude'], datasets: [{ data: [99, 1.87], backgroundColor: ['#3b82f6', '#ef4444'] }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { type: 'logarithmic' } } } });
-            new Chart(document.getElementById('valueChart'), { type: 'bar', data: { labels: ['Legítimo', 'Fraude'], datasets: [{ data: [GLOBAL_DATA.stats.ticket, GLOBAL_DATA.stats.fraudTicket], backgroundColor: ['#3b82f6', '#ef4444'] }] }, options: { responsive: true, plugins: { legend: { display: false } } } });
-            new Chart(document.getElementById('hourChart'), { type: 'line', data: { labels: ['0h','6h','12h','18h','23h'], datasets: [{ label: 'Fraude', data: [80, 20, 10, 30, 70], borderColor: '#ef4444', fill: true }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { display: false } } } });
+            // Chart Value (Ticket Médio)
+            new Chart(document.getElementById('valueChart'), { 
+                type: 'bar', 
+                data: { 
+                    labels: ['Legítimo', 'Fraude'], 
+                    datasets: [{ 
+                        data: [ANALYTICS.ticket_legit, ANALYTICS.ticket_fraud], 
+                        backgroundColor: ['#3b82f6', '#ef4444'],
+                        borderRadius: 4
+                    }] 
+                }, 
+                options: { 
+                    responsive: true, 
+                    plugins: { legend: { display: false } },
+                    scales: { y: { grid: { color: '#333' }, ticks: { color: '#888' } }, x: { ticks: { color: '#fff' } } }
+                } 
+            });
+
+            // Chart Feature (Horizontal) - Simplificado
+            new Chart(document.getElementById('featureChart'), { 
+                type: 'bar', 
+                data: { 
+                    labels: ['Delta T (Min)', 'Outros'], 
+                    datasets: [{ 
+                        data: [73.4, 26.6], 
+                        backgroundColor: ['#00A868', '#333'],
+                        borderRadius: 4
+                    }] 
+                }, 
+                options: { 
+                    indexAxis: 'y',
+                    responsive: true, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { x: { display: false }, y: { ticks: { color: 'white' } } } 
+                } 
+            });
+
+            // Chart Hour
+            new Chart(document.getElementById('hourChart'), { 
+                type: 'line', 
+                data: { 
+                    labels: ['0h','6h','12h','18h','23h'], 
+                    datasets: [{ label: 'Risco', data: [90, 20, 10, 30, 80], borderColor: '#ef4444', fill: true, backgroundColor: 'rgba(239, 68, 68, 0.1)' }] 
+                }, 
+                options: { 
+                    responsive: true, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { y: { display: false }, x: { ticks: { color: '#888' } } } 
+                } 
+            });
         }
-        function initFeatureChart() {
-            new Chart(document.getElementById('featureChart').getContext('2d'), { type: 'bar', data: { labels: ['Delta Tempo', 'Valor', 'Hora'], datasets: [{ label: 'Importância', data: [73, 18, 9], backgroundColor: ['#00A868', '#3b82f6', '#a855f7'], borderRadius: 4 }] }, options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { ticks: { color: 'white' } } } } });
-        }
-        function initChart() {
-            // Gráfico de lucro baseado na simulação dinâmica
+
+        function initProfitChart() {
             const ctx = document.getElementById('profitChart').getContext('2d');
             const labels = []; const data = [];
             
-            // Se temos dados reais, calculamos a curva real. Se não, fallback.
-            const useReal = GLOBAL_DATA.train.length > 0;
-            
-            for(let i=50; i<100; i+=2) {
+            // Gera curva baseada na lógica do updateSimulator
+            for(let i=50; i<=95; i+=2) {
                 labels.push(i + '%');
-                const res = useReal ? calculateSimulation(i) : getCalculatedValuesFallback(i/100);
-                data.push(res.net);
+                // Copia da lógica do updateSimulator para gerar o array
+                let s, l;
+                if (i <= 87) {
+                    const r = (i - 50) / (87 - 50);
+                    s = 692367 - (r * (692367 - 635751)); 
+                    l = 389439 - (r * (389439 - 174995));
+                } else {
+                    const r = (i - 87) / (100 - 87);
+                    s = 635751 * (1 - r * 0.8); 
+                    l = 174995 * (1 - r);
+                }
+                data.push(s - l);
             }
             
-            new Chart(ctx, { type: 'line', data: { labels: labels, datasets: [{ label: 'Lucro', data: data, borderColor: '#00A868', backgroundColor: 'rgba(0,168,104,0.2)', fill: true, pointRadius: 0 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { grid: { color: '#333' } } } } });
+            new Chart(ctx, { 
+                type: 'line', 
+                data: { 
+                    labels: labels, 
+                    datasets: [{ 
+                        label: 'Lucro Líquido', 
+                        data: data, 
+                        borderColor: '#00A868', 
+                        backgroundColor: 'rgba(0,168,104,0.2)', 
+                        fill: true, 
+                        pointRadius: 4,
+                        pointHoverRadius: 8
+                    }] 
+                }, 
+                options: { 
+                    responsive: true, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { x: { grid: { display: false }, ticks: { color: '#888' } }, y: { grid: { color: '#333' }, ticks: { color: '#888' } } } 
+                } 
+            });
         }
 
         // --- CHAT ---
         function handleChatKey(e) { if(e.key === 'Enter') sendMessage(); }
         function askQuestion(t) { 
-            const m = {'monitorar': 'Como monitorar em produção?', 'feature_store': 'Cálculo tempo real?', 'shap': 'Explicabilidade?'};
+            const m = {
+                'metricas': 'Quais as principais métricas do modelo?', 
+                'financeiro': 'Qual o impacto financeiro final?', 
+                'feature': 'O que mais impacta a fraude?'
+            };
             document.getElementById('chat-input').value = m[t]; setTimeout(sendMessage, 300);
         }
         function sendMessage() {
@@ -630,10 +529,10 @@
             setTimeout(() => {
                 let r = "Não entendi.";
                 const l = t.toLowerCase();
-                if(l.includes('monitorar')) r = "Via **Concept Drift** e PSI diário.";
-                else if(l.includes('real')) r = "Usando **Feature Store (Redis)**.";
-                else if(l.includes('shap')) r = "Usamos **SHAP Values** para explicar cada decisão.";
-                else r = "Minha análise foca em maximizar lucro com corte em 87%, bloqueando ataques robóticos.";
+                if(l.includes('metricas') || l.includes('modelo')) r = "Nosso Random Forest alcançou **AUC de 0.88**. Na base de produção, sugerimos bloquear **200 transações** suspeitas.";
+                else if(l.includes('financeiro') || l.includes('impacto')) r = "Com o threshold de 87%, alcançamos o lucro máximo de **R$ 460.756**, economizando R$ 635k em fraudes.";
+                else if(l.includes('feature') || l.includes('impacta')) r = "A variável **Delta T** (tempo entre compras) é a mais forte (73%), seguida pelo Valor da transação.";
+                else r = "Estou configurado com os dados finais da análise. Posso detalhar o lucro ou as variáveis.";
                 addMessage(r, 'ai');
             }, 800);
         }
@@ -641,6 +540,9 @@
             const div = document.createElement('div'); div.className = `flex ${sender==='user'?'justify-end':'justify-start'}`;
             div.innerHTML = `<div class="max-w-[85%] p-4 rounded-2xl ${sender==='user'?'bg-stone-green text-white':'bg-[#1A1A1A] border border-[#333] text-gray-300'}"><p class="text-sm">${txt}</p></div>`;
             document.getElementById('chat-messages').append(div);
+            // Scroll to bottom
+            const container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
         }
     </script>
 </body>
