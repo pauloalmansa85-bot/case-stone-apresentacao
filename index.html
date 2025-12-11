@@ -3,347 +3,479 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Case Stone (Paulo)</title>
+    <title>Stone Case - Risco & Fraude</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #0f0f0f; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        /* Base Styles - Dark Mode Stone */
+        body { background-color: #0e0e0e; color: #e5e5e5; font-family: 'Inter', sans-serif; antialiased; }
         
-        /* Cores Stone */
-        .text-green-stone { color: #00A868; }
-        .bg-green-stone { background-color: #00A868; }
-        .border-green-stone { border-color: #00A868; }
+        .stone-green { color: #00A868; }
+        .bg-stone-green { background-color: #00A868; }
+        .border-stone-green { border-color: #00A868; }
         
-        /* Custom Cards */
-        .card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; }
-        .card:hover { border-color: #3f3f46; }
-
-        /* Slider Customizado */
+        /* Card Styling */
+        .card { 
+            background: #18181b; 
+            border: 1px solid #27272a; 
+            border-radius: 8px; 
+        }
+        
+        /* Custom Range Slider */
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
-            background: #00A868; cursor: pointer; margin-top: -6px; 
+            background: #00A868; cursor: pointer; margin-top: -6px; border: 2px solid #18181b;
         }
         input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 4px; background: #333; border-radius: 2px;
+            width: 100%; height: 4px; background: #3f3f46; border-radius: 2px;
         }
 
-        /* Tabs */
-        .nav-btn.active { background: #27272a; color: white; border-left: 3px solid #00A868; }
-        .section-view { display: none; }
-        .section-view.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* Navigation Tabs */
+        .nav-item { cursor: pointer; border-bottom: 2px solid transparent; color: #71717a; transition: all 0.2s; }
+        .nav-item:hover { color: #d4d4d8; }
+        .nav-item.active { border-bottom-color: #00A868; color: #00A868; font-weight: 600; }
+
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+
+        /* Scrollbar discreta */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #18181b; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #52525b; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body class="flex flex-col h-screen overflow-hidden">
 
-    <aside class="w-64 bg-[#121212] border-r border-[#27272a] flex flex-col p-4">
-        <div class="mb-8 px-2 flex items-center gap-2">
-            <div class="w-8 h-8 bg-green-stone rounded flex items-center justify-center font-bold text-black">S</div>
+    <header class="h-16 border-b border-[#27272a] bg-[#121212] flex items-center justify-between px-8 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-[#00A868] rounded flex items-center justify-center font-bold text-black">S</div>
             <div>
-                <h1 class="font-bold text-white tracking-tight">Stone Case</h1>
-                <p class="text-[10px] text-gray-500 font-mono">v2.0_FINAL_DATA</p>
+                <h1 class="text-sm font-bold text-white tracking-wide">STONE <span class="text-gray-500 font-normal">| Data Science Case</span></h1>
             </div>
         </div>
-
-        <nav class="space-y-1 flex-1">
-            <button onclick="mudarAba('visao-geral')" id="btn-visao-geral" class="nav-btn w-full text-left px-4 py-3 rounded text-sm text-gray-400 hover:text-white transition-all flex items-center gap-3 active">
-                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Visão Geral
-            </button>
-            <button onclick="mudarAba('analise-fraude')" id="btn-analise-fraude" class="nav-btn w-full text-left px-4 py-3 rounded text-sm text-gray-400 hover:text-white transition-all flex items-center gap-3">
-                <i data-lucide="search" class="w-4 h-4"></i> Análise de Fraude
-            </button>
-            <button onclick="mudarAba('simulador')" id="btn-simulador" class="nav-btn w-full text-left px-4 py-3 rounded text-sm text-gray-400 hover:text-white transition-all flex items-center gap-3">
-                <i data-lucide="sliders" class="w-4 h-4"></i> Simulador P&L
-            </button>
-        </nav>
-
-        <div class="pt-4 border-t border-[#27272a]">
-            <div class="flex items-center gap-3 px-2">
-                <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-xs">P</div>
-                <div>
-                    <p class="text-sm font-medium">Paulo</p>
-                    <p class="text-xs text-gray-500">Candidato</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="flex-1 bg-[#0f0f0f] p-8 overflow-y-auto">
-        
-        <div class="flex justify-between items-end mb-8 pb-4 border-b border-[#27272a]">
-            <div>
-                <p class="text-xs font-bold text-green-stone uppercase mb-1">Resultado da Análise</p>
-                <h2 class="text-3xl font-bold text-white">Estratégia de Risco & Prevenção</h2>
-            </div>
+        <div class="flex items-center gap-6">
             <div class="text-right">
-                <span class="text-xs text-gray-500 block">Status da Base</span>
-                <span class="px-2 py-1 bg-green-900/30 text-green-400 text-xs rounded border border-green-900/50">Processado (11k transações)</span>
+                <p class="text-[10px] text-gray-500 uppercase font-bold">Candidato</p>
+                <p class="text-xs text-white">Paulo</p>
+            </div>
+            <div class="h-8 w-px bg-[#27272a]"></div>
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs text-gray-400">Model v1.0 (Prod)</span>
             </div>
         </div>
+    </header>
 
-        <div id="visao-geral" class="section-view active max-w-5xl">
-            <div class="grid grid-cols-4 gap-4 mb-6">
-                <div class="card p-5">
-                    <p class="text-gray-500 text-xs uppercase font-bold">Volume Analisado</p>
-                    <p class="text-2xl font-bold text-white mt-1">R$ 1.43 Mi</p>
-                    <p class="text-xs text-red-400 mt-2 flex items-center gap-1"><i data-lucide="arrow-down" class="w-3 h-3"></i> Menor que esperado</p>
-                </div>
-                <div class="card p-5">
-                    <p class="text-gray-500 text-xs uppercase font-bold">Ticket Médio</p>
-                    <p class="text-2xl font-bold text-white mt-1">R$ 130,02</p>
-                    <p class="text-xs text-gray-400 mt-2">Varejo Comum</p>
-                </div>
-                <div class="card p-5">
-                    <p class="text-gray-500 text-xs uppercase font-bold">Performance (AUC)</p>
-                    <p class="text-2xl font-bold text-green-stone mt-1">0.8859</p>
-                    <p class="text-xs text-gray-400 mt-2">Modelo Random Forest</p>
-                </div>
-                <div class="card p-5 border-green-stone/30">
-                    <p class="text-gray-500 text-xs uppercase font-bold">Resultado Líquido</p>
-                    <p class="text-2xl font-bold text-green-stone mt-1">R$ 44.9k</p>
-                    <p class="text-xs text-gray-400 mt-2">Cenário Otimizado (87%)</p>
-                </div>
-            </div>
+    <div class="flex flex-1 overflow-hidden">
+        
+        <aside class="w-64 bg-[#121212] border-r border-[#27272a] flex flex-col pt-6">
+            <nav class="space-y-1 px-3">
+                <a onclick="setView('dashboard')" id="nav-dashboard" class="nav-btn flex items-center gap-3 px-3 py-2 text-sm rounded-md bg-[#27272a] text-white cursor-pointer">
+                    <i data-lucide="layout-grid" class="w-4 h-4"></i> Dashboard Executivo
+                </a>
+                <a onclick="setView('technical')" id="nav-technical" class="nav-btn flex items-center gap-3 px-3 py-2 text-sm rounded-md text-gray-400 hover:text-white hover:bg-[#18181b] cursor-pointer">
+                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Análise Técnica
+                </a>
+                <a onclick="setView('simulator')" id="nav-simulator" class="nav-btn flex items-center gap-3 px-3 py-2 text-sm rounded-md text-gray-400 hover:text-white hover:bg-[#18181b] cursor-pointer">
+                    <i data-lucide="sliders" class="w-4 h-4"></i> Simulador ROI
+                </a>
+                <div class="my-4 border-t border-[#27272a]"></div>
+                <p class="px-3 text-[10px] uppercase text-gray-600 font-bold mb-2">Suporte</p>
+                <a onclick="setView('faq')" id="nav-faq" class="nav-btn flex items-center gap-3 px-3 py-2 text-sm rounded-md text-gray-400 hover:text-white hover:bg-[#18181b] cursor-pointer">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Notas Técnicas (FAQ)
+                </a>
+            </nav>
+        </aside>
 
-            <div class="card p-8 border-l-4 border-green-stone">
-                <h3 class="text-xl font-bold mb-4">O "Pulo do Gato" 🐈</h3>
-                <p class="text-gray-300 leading-relaxed mb-4">
-                    Quando rodei a análise, o volume de <strong>R$ 1,4 milhão</strong> e o ticket de <strong>R$ 130</strong> acenderam um alerta. 
-                    Nesse cenário de margem apertada, bloquear falsos positivos (clientes bons) custa muito caro.
-                </p>
-                <div class="grid grid-cols-2 gap-8 mt-6 p-4 bg-black/20 rounded-lg">
-                    <div>
-                        <p class="text-red-400 font-bold mb-1">Cenário Padrão (50%)</p>
-                        <p class="text-sm text-gray-400">Bloqueia muita venda boa. A operação teria um <strong>prejuízo de R$ 40 mil</strong>.</p>
-                    </div>
-                    <div>
-                        <p class="text-green-stone font-bold mb-1">Minha Solução (87%)</p>
-                        <p class="text-sm text-gray-400">Só bloqueia se tiver certeza. Reverte para <strong>lucro de R$ 45 mil</strong>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="analise-fraude" class="section-view max-w-6xl">
-            <div class="grid grid-cols-3 gap-6">
-                <div class="card p-6">
-                    <p class="font-bold mb-4 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-green-stone"></i> Velocidade (Bot)</p>
-                    <div class="h-40"><canvas id="chartVelocidade"></canvas></div>
-                    <p class="text-xs text-gray-400 mt-2">Fraudes ocorrem em intervalos de < 2 min.</p>
-                </div>
-                <div class="card p-6">
-                    <p class="font-bold mb-4 flex items-center gap-2"><i data-lucide="dollar-sign" class="w-4 h-4 text-green-stone"></i> Ticket Médio</p>
-                    <div class="h-40"><canvas id="chartValor"></canvas></div>
-                    <p class="text-xs text-gray-400 mt-2">Fraudador gasta 12x mais que cliente real.</p>
-                </div>
-                <div class="card p-6">
-                    <p class="font-bold mb-4 flex items-center gap-2"><i data-lucide="bar-chart-2" class="w-4 h-4 text-green-stone"></i> Importância (SHAP)</p>
-                    <div class="space-y-3 mt-4">
-                        <div>
-                            <div class="flex justify-between text-xs mb-1"><span>Delta T (Tempo)</span> <span>73%</span></div>
-                            <div class="w-full bg-gray-700 h-1.5 rounded"><div class="bg-green-stone h-1.5 rounded" style="width: 73%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs mb-1"><span>Valor (Amount)</span> <span>18%</span></div>
-                            <div class="w-full bg-gray-700 h-1.5 rounded"><div class="bg-blue-500 h-1.5 rounded" style="width: 18%"></div></div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-xs mb-1"><span>Hora</span> <span>9%</span></div>
-                            <div class="w-full bg-gray-700 h-1.5 rounded"><div class="bg-purple-500 h-1.5 rounded" style="width: 9%"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <main class="flex-1 overflow-y-auto bg-[#0e0e0e] p-8">
             
-            <div class="mt-6 card p-6">
-                <h4 class="font-bold mb-2">Aplicação na Base de Teste (Aba 2)</h4>
-                <p class="text-sm text-gray-400 mb-4">Resultado do modelo Random Forest aplicado nas 11.820 novas transações.</p>
-                <div class="flex items-center gap-8">
-                    <div>
-                        <p class="text-3xl font-bold text-white">242</p>
-                        <p class="text-xs text-gray-500 uppercase">Transações Bloqueadas</p>
+            <div id="dashboard" class="view-section active max-w-6xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-2">Diagnóstico da Operação</h2>
+                    <p class="text-gray-400 text-sm">Análise de impacto financeiro baseada no volume de R$ 1.4 Mi processado.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div class="card p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] uppercase font-bold text-gray-500">Volume Total</span>
+                            <i data-lucide="database" class="w-4 h-4 text-gray-600"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">R$ 1.43 Mi</span>
+                        <div class="mt-2 text-xs text-red-400 flex items-center gap-1">
+                            <i data-lucide="alert-circle" class="w-3 h-3"></i> Menor que previsto
+                        </div>
                     </div>
-                    <div class="h-10 w-px bg-gray-700"></div>
-                    <div>
-                        <p class="text-3xl font-bold text-green-stone">R$ 55k</p>
-                        <p class="text-xs text-gray-500 uppercase">Fraude Prevenida</p>
+
+                    <div class="card p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] uppercase font-bold text-gray-500">Ticket Médio</span>
+                            <i data-lucide="credit-card" class="w-4 h-4 text-gray-600"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">R$ 130,02</span>
+                        <div class="mt-2 text-xs text-gray-400">Perfil Varejo (Margem Baixa)</div>
                     </div>
-                    <div class="flex-1 text-right">
-                         <button class="bg-[#27272a] hover:bg-[#3f3f46] text-white px-4 py-2 rounded text-xs flex items-center gap-2 ml-auto">
-                            <i data-lucide="download" class="w-3 h-3"></i> Baixar Relatório .xlsx
-                        </button>
+
+                    <div class="card p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] uppercase font-bold text-gray-500">Modelo (AUC)</span>
+                            <i data-lucide="activity" class="w-4 h-4 text-[#00A868]"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-[#00A868]">0.8859</span>
+                        <div class="mt-2 text-xs text-gray-400">Random Forest</div>
+                    </div>
+
+                    <div class="card p-5 border border-[#00A868] bg-[#00A868]/5">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] uppercase font-bold text-[#00A868]">Lucro Projetado</span>
+                            <i data-lucide="trending-up" class="w-4 h-4 text-[#00A868]"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-[#00A868]">+ R$ 44.9k</span>
+                        <div class="mt-2 text-xs text-[#00A868]">Cenário Otimizado (87%)</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="col-span-2 card p-6">
+                        <h3 class="font-bold text-white mb-4 flex items-center gap-2">
+                            <i data-lucide="scale" class="w-4 h-4 text-gray-400"></i> Análise de Viabilidade
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-red-900/10 border border-red-900/30 p-4 rounded text-sm">
+                                <strong class="block text-red-400 mb-1">Cenário Padrão (Corte 50%)</strong>
+                                <p class="text-gray-400">Com ticket de R$ 130, bloquear falsos positivos custa caro. Neste cenário, perderíamos R$ 122k em vendas legítimas, resultando em um <span class="text-red-400 font-bold">prejuízo operacional de R$ 40 mil</span>.</p>
+                            </div>
+                            <div class="bg-emerald-900/10 border border-emerald-900/30 p-4 rounded text-sm">
+                                <strong class="block text-[#00A868] mb-1">Cenário Recomendado (Corte 87%)</strong>
+                                <p class="text-gray-400">Aumentando o rigor, reduzimos os falsos positivos drasticamente. Isolamos os ataques de robôs e revertemos o resultado para um <span class="text-[#00A868] font-bold">lucro líquido de R$ 45 mil</span>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 flex flex-col justify-center text-center">
+                        <div class="mb-4">
+                            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Ação na Base Teste (Aba 2)</span>
+                        </div>
+                        <div class="text-5xl font-bold text-white mb-2">242</div>
+                        <div class="text-sm text-[#00A868] font-medium mb-4">Transações Bloqueadas</div>
+                        <p class="text-xs text-gray-500 px-4">Representa ~2% da base, focada exclusivamente em comportamento não-humano.</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="simulador" class="section-view max-w-6xl">
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-4 space-y-6">
-                    <div class="card p-6 border-t-4 border-green-stone">
-                        <h3 class="font-bold text-lg mb-1">Calibração do Modelo</h3>
-                        <p class="text-xs text-gray-400 mb-6">Ajuste o corte (threshold) para ver o impacto no P&L.</p>
-                        
-                        <div class="flex justify-between items-end mb-2">
-                            <span class="text-xs uppercase font-bold text-gray-500">Threshold</span>
-                            <span class="text-3xl font-bold text-green-stone" id="disp-thresh">87%</span>
-                        </div>
-                        <input type="range" id="sim-slider" min="50" max="95" value="87" class="w-full mb-6">
-                        
-                        <div class="space-y-3 pt-4 border-t border-[#27272a]">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-gray-400">Fraude Evitada</span>
-                                <span class="text-sm font-bold text-green-400" id="disp-saving">R$ 55k</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-gray-400">Vendas Perdidas</span>
-                                <span class="text-sm font-bold text-red-400" id="disp-loss">R$ 10k</span>
-                            </div>
-                            <div class="flex justify-between bg-black/30 p-3 rounded mt-2">
-                                <span class="text-sm font-bold text-white">Lucro Líquido</span>
-                                <span class="text-lg font-bold text-green-stone" id="disp-net">R$ 44k</span>
-                            </div>
-                        </div>
-
-                        <div id="alert-box" class="mt-4 p-3 bg-red-900/20 border border-red-900/50 rounded hidden">
-                            <p class="text-xs text-red-300">⚠️ <strong>Atenção:</strong> Nesse nível, o custo de falsos positivos gera prejuízo operacional.</p>
-                        </div>
-                    </div>
+            <div id="technical" class="view-section max-w-6xl mx-auto">
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-white">Detalhamento do Modelo</h2>
+                    <p class="text-sm text-gray-400">Feature Engineering e Comportamento da Fraude.</p>
                 </div>
 
-                <div class="col-span-8 card p-6 flex flex-col">
-                    <h4 class="text-sm font-bold text-gray-400 uppercase mb-4">Curva de Lucratividade</h4>
-                    <div class="flex-1 relative">
-                        <canvas id="chartProfit"></canvas>
+                <div class="grid grid-cols-2 gap-6 mb-6">
+                    <div class="card p-6">
+                        <h3 class="text-sm font-bold text-gray-300 mb-6">SHAP Values (Importância Global)</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400">
+                                    <span>Delta T (Tempo entre transações)</span>
+                                    <span>73%</span>
+                                </div>
+                                <div class="w-full bg-[#27272a] h-2 rounded-full overflow-hidden">
+                                    <div class="bg-[#00A868] h-full" style="width: 73%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400">
+                                    <span>Valor da Transação</span>
+                                    <span>18%</span>
+                                </div>
+                                <div class="w-full bg-[#27272a] h-2 rounded-full overflow-hidden">
+                                    <div class="bg-blue-600 h-full" style="width: 18%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1 text-gray-400">
+                                    <span>Hora do Dia</span>
+                                    <span>9%</span>
+                                </div>
+                                <div class="w-full bg-[#27272a] h-2 rounded-full overflow-hidden">
+                                    <div class="bg-purple-600 h-full" style="width: 9%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-3 bg-[#27272a] rounded text-xs text-gray-400">
+                            <strong>Interpretação:</strong> O modelo aprendeu que o <em>timing</em> (ataques rápidos) é o preditor mais forte de fraude, mais do que o valor em si.
+                        </div>
+                    </div>
+
+                    <div class="card p-6">
+                        <h3 class="text-sm font-bold text-gray-300 mb-4">Padrão da Fraude</h3>
+                        <div class="h-48">
+                            <canvas id="velocityChart"></canvas>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-2">Intervalo médio entre compras (Minutos)</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </main>
+            <div id="simulator" class="view-section max-w-6xl mx-auto">
+                <div class="grid grid-cols-12 gap-6 h-full">
+                    
+                    <div class="col-span-4 flex flex-col gap-6">
+                        <div class="card p-6 border-l-4 border-[#00A868]">
+                            <h3 class="font-bold text-white mb-1">Calibrar Threshold</h3>
+                            <p class="text-xs text-gray-400 mb-6">Ajuste a sensibilidade para ver o P&L.</p>
+                            
+                            <div class="flex justify-between items-end mb-2">
+                                <span class="text-xs uppercase font-bold text-gray-500">Corte</span>
+                                <span class="text-3xl font-bold text-[#00A868]" id="lbl-threshold">87%</span>
+                            </div>
+                            <input type="range" id="sim-slider" min="50" max="95" value="87" class="w-full mb-6 accent-[#00A868]">
+                            
+                            <div class="space-y-3 pt-4 border-t border-[#27272a]">
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-400">Economia (Fraude)</span>
+                                    <span class="text-sm font-bold text-blue-400" id="val-savings">R$ 55k</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-sm text-gray-400">Perda (Falsos Pos.)</span>
+                                    <span class="text-sm font-bold text-red-400" id="val-loss">R$ 10k</span>
+                                </div>
+                                <div class="mt-4 p-3 bg-[#000] rounded flex justify-between items-center border border-[#27272a]">
+                                    <span class="text-xs font-bold text-gray-400 uppercase">Resultado</span>
+                                    <span class="text-lg font-bold text-[#00A868]" id="val-net">R$ 44k</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="loss-warning" class="hidden p-4 bg-red-900/10 border border-red-900/30 rounded text-xs text-red-300">
+                            <strong>Alerta de Prejuízo:</strong> Threshold muito baixo. O custo de fricção supera a economia de fraude.
+                        </div>
+                    </div>
+
+                    <div class="col-span-8 card p-6 flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold text-gray-400 uppercase">Curva de Lucratividade</h3>
+                            <div class="flex gap-4 text-xs">
+                                <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-red-500"></div> Prejuízo</div>
+                                <div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-[#00A868]"></div> Lucro</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 relative w-full h-full min-h-[300px]">
+                            <canvas id="profitChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="faq" class="view-section max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-white">Notas Técnicas</h2>
+                    <p class="text-sm text-gray-400">Resumo de decisões arquiteturais e estratégia de deploy.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="card p-5">
+                        <h3 class="text-sm font-bold text-[#00A868] mb-2 flex items-center gap-2">
+                            <i data-lucide="database" class="w-4 h-4"></i> Feature Store & Latência
+                        </h3>
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            Para calcular o <code>delta_t</code> em tempo real (< 100ms), não podemos consultar o Data Lake. 
+                            <strong>Estratégia:</strong> Utilizar Redis ou DynamoDB como Feature Store online, armazenando apenas o 
+                            <em>last_transaction_timestamp</em> por <code>card_id</code>.
+                        </p>
+                    </div>
+
+                    <div class="card p-5">
+                        <div class="flex justify-between">
+                            <h3 class="text-sm font-bold text-[#00A868] mb-2 flex items-center gap-2">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i> Monitoramento & Drift
+                            </h3>
+                        </div>
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            Monitoramento contínuo via <strong>PSI (Population Stability Index)</strong> na distribuição dos scores. 
+                            Se o padrão de fraude mudar (ex: ataques mais lentos), o PSI dispara alerta para retreino.
+                        </p>
+                    </div>
+
+                    <div class="card p-5">
+                        <h3 class="text-sm font-bold text-[#00A868] mb-2 flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i> Decisão nos "Cinzentos"
+                        </h3>
+                        <p class="text-sm text-gray-300 leading-relaxed">
+                            Scores entre 50% e 86% não devem ser bloqueados, mas desafiados.
+                            <strong>Ação:</strong> Step-up authentication (3DS 2.0 ou SMS challenge) para salvar a venda legítima.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
 
     <script>
+        // Init Icons
         lucide.createIcons();
 
-        // Dados extraídos da análise Python (Hardcoded para performance)
-        const DATA_SIM = {
-            p50: { net: -40927, savings: 81089, loss: 122017 },
-            p87: { net: 44990, savings: 55840, loss: 10849 }
-        };
+        // --- NAVIGATION LOGIC ---
+        function setView(viewId) {
+            // Hide all sections
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            // Reset nav buttons
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-[#27272a]', 'text-white');
+                el.classList.add('text-gray-400');
+            });
 
-        // Estado inicial
-        let currentThresh = 87;
+            // Activate chosen
+            document.getElementById(viewId).classList.add('active');
+            const activeBtn = document.getElementById('nav-' + viewId);
+            activeBtn.classList.remove('text-gray-400');
+            activeBtn.classList.add('bg-[#27272a]', 'text-white');
 
-        // Funções de UI
-        function mudarAba(id) {
-            document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(id).classList.add('active');
-            document.getElementById('btn-' + id).classList.add('active');
+            // Trigger Chart resize if needed
+            if(viewId === 'simulator' || viewId === 'technical') {
+                window.dispatchEvent(new Event('resize'));
+            }
         }
 
-        function formatMoney(val) {
-            return val.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL', maximumFractionDigits: 0});
-        }
+        // --- SIMULATOR LOGIC ---
+        // Data points from Python Analysis
+        // 50% -> Net: -40.927
+        // 87% -> Net: +44.990
+        
+        function updateSimulator(val) {
+            const threshold = parseInt(val);
+            document.getElementById('lbl-threshold').innerText = threshold + '%';
 
-        // Lógica do Simulador (Interpolação simples entre os pontos conhecidos do Python)
-        function updateSim(val) {
-            val = parseInt(val);
-            document.getElementById('disp-thresh').innerText = val + '%';
-            
             let net, savings, loss;
             
-            // Interpolação entre 50% e 87%
-            if (val <= 87) {
-                const ratio = (val - 50) / 37; // (87-50)
+            // Linear Interpolation Logic
+            if (threshold <= 87) {
+                // From 50 to 87
+                const ratio = (threshold - 50) / 37;
                 savings = 81089 - (ratio * (81089 - 55840));
                 loss = 122017 - (ratio * (122017 - 10849));
             } else {
-                // Acima de 87% (Queda brusca)
-                const ratio = (val - 87) / 13;
-                savings = 55840 * (1 - ratio * 0.6);
-                loss = 10849 * (1 - ratio);
+                // From 87 to 95 (Rapid dropoff)
+                const ratio = (threshold - 87) / 8;
+                savings = 55840 * (1 - ratio * 0.7); // Frauds pass through
+                loss = 10849 * (1 - ratio); // Almost no false positives
             }
             net = savings - loss;
 
             // Update DOM
-            document.getElementById('disp-saving').innerText = formatMoney(savings);
-            document.getElementById('disp-loss').innerText = formatMoney(loss);
-            const elNet = document.getElementById('disp-net');
-            elNet.innerText = formatMoney(net);
+            document.getElementById('val-savings').innerText = formatCurrency(savings);
+            document.getElementById('val-loss').innerText = formatCurrency(loss);
+            
+            const netEl = document.getElementById('val-net');
+            netEl.innerText = formatCurrency(net);
+            
+            const warningEl = document.getElementById('loss-warning');
 
-            // Cores e Alertas
-            const alertBox = document.getElementById('alert-box');
             if (net < 0) {
-                elNet.className = "text-lg font-bold text-red-500";
-                alertBox.classList.remove('hidden');
+                netEl.className = "text-lg font-bold text-red-500";
+                warningEl.classList.remove('hidden');
             } else {
-                elNet.className = "text-lg font-bold text-green-stone";
-                alertBox.classList.add('hidden');
+                netEl.className = "text-lg font-bold text-[#00A868]";
+                warningEl.classList.add('hidden');
             }
         }
 
-        // Listener do Slider
-        document.getElementById('sim-slider').addEventListener('input', (e) => updateSim(e.target.value));
+        function formatCurrency(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+        }
 
-        // Inicializar Gráficos Chart.js
+        document.getElementById('sim-slider').addEventListener('input', (e) => updateSimulator(e.target.value));
+
+        // --- CHARTS INIT ---
         window.addEventListener('load', () => {
-            // Chart Velocidade
-            new Chart(document.getElementById('chartVelocidade'), {
-                type: 'bar',
-                data: { labels: ['Legítimo', 'Fraude'], datasets: [{ data: [99, 1.8], backgroundColor: ['#3b82f6', '#ef4444'] }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { type: 'logarithmic', grid: {color: '#333'} }, x: { grid: {display: false} } } }
-            });
-
-            // Chart Valor
-            new Chart(document.getElementById('chartValor'), {
-                type: 'bar',
-                data: { labels: ['Legítimo', 'Fraude'], datasets: [{ data: [130, 1660], backgroundColor: ['#3b82f6', '#ef4444'] }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { grid: {color: '#333'} }, x: { grid: {display: false} } } }
-            });
-
-            // Chart Profit Curve (Gerado dinamicamente)
-            const profitLabels = [];
-            const profitData = [];
-            const profitColors = [];
             
-            for(let i=50; i<=95; i+=2) {
-                profitLabels.push(i+'%');
-                // Mesma lógica de interpolação
+            // 1. Velocity Chart
+            const ctxVel = document.getElementById('velocityChart').getContext('2d');
+            new Chart(ctxVel, {
+                type: 'bar',
+                data: {
+                    labels: ['Legítimo', 'Fraude'],
+                    datasets: [{
+                        label: 'Minutos',
+                        data: [99, 1.8],
+                        backgroundColor: ['#27272a', '#ef4444'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { type: 'logarithmic', grid: { color: '#27272a' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            // 2. Profit Chart (Dynamic Colors)
+            const ctxProfit = document.getElementById('profitChart').getContext('2d');
+            
+            // Generate Data Points
+            const labels = [];
+            const data = [];
+            const colors = [];
+
+            for(let i=50; i<=95; i+=1) {
+                labels.push(i + '%');
                 let n;
                 if(i <= 87) {
                     const r = (i - 50) / 37;
                     n = -40927 + r * (44990 - (-40927));
                 } else {
-                    const r = (i - 87) / 13;
+                    const r = (i - 87) / 8;
                     n = 44990 * (1 - r);
                 }
-                profitData.push(n);
-                profitColors.push(n >= 0 ? '#00A868' : '#ef4444');
+                data.push(n);
+                colors.push(n >= 0 ? '#00A868' : '#ef4444');
             }
 
-            new Chart(document.getElementById('chartProfit'), {
+            new Chart(ctxProfit, {
                 type: 'bar',
-                data: { labels: profitLabels, datasets: [{ data: profitData, backgroundColor: profitColors, borderRadius: 4 }] },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { 
-                        y: { grid: {color: '#333'}, ticks: { color: '#888', callback: v => 'R$ ' + v/1000 + 'k' } },
-                        x: { grid: {display: false}, ticks: { color: '#888' } }
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                        borderRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'R$ ' + context.raw.toLocaleString('pt-BR');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            grid: { color: '#27272a' },
+                            ticks: { color: '#71717a', callback: (v) => 'R$ ' + v/1000 + 'k' }
+                        },
+                        x: { grid: { display: false }, ticks: { display: false } }
                     }
                 }
             });
 
-            // Inicia simulador
-            updateSim(87);
+            // Init Simulator
+            updateSimulator(87);
         });
 
     </script>
