@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone - Case Data Science</title>
+    
+    <!-- Fonte Oficial (Inter - similar à da Stone) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: {
+                            green: '#00A868', // Verde Oficial Stone
+                            dark: '#1A1A1A',  // Preto Institucional
+                            gray: '#2D2D2D',  // Cinza Painel
+                            light: '#F5F5F5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #121212; color: white; font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00A868; }
+
+        /* Animações e Transições */
+        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+        
+        .stone-card {
+            background: #1E1E1E;
+            border: 1px solid #333;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .stone-card:hover {
+            border-color: #00A868;
+            transform: translateY(-2px);
+        }
+
+        /* Slider Customizado Stone */
+        input[type=range] {
+            -webkit-appearance: none; 
+            background: transparent; 
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #00A868;
+            cursor: pointer;
+            margin-top: -8px; 
+            box-shadow: 0 0 10px rgba(0, 168, 104, 0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        /* Chat Chips (Perguntas Sênior) */
+        .chat-chip {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .chat-chip:hover {
+            background: rgba(0, 168, 104, 0.1);
+            border-color: #00A868;
+            color: #00A868;
+            transform: translateY(-1px);
+        }
+        .chat-chip i { width: 14px; height: 14px; }
+
+        /* Esconder scrollbar horizontal dos chips */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="flex min-h-screen text-slate-100 selection:bg-stone-green selection:text-white overflow-hidden">
+
+    <!-- SIDEBAR (Identidade Visual Stone) -->
+    <aside class="w-64 h-screen fixed left-0 top-0 bg-[#151515] border-r border-[#333] flex flex-col p-6 z-30 shadow-2xl">
+        <!-- Logo Area -->
+        <div class="flex items-center gap-2 mb-12">
+            <!-- Simulação do Símbolo Stone (Dois colchetes estilizados) -->
+            <div class="relative w-8 h-8 flex items-center justify-center">
+               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-stone-green">
+                   <path d="M16.5 3C19.5 3 21 5 21 8" stroke="#00A868" stroke-width="3" stroke-linecap="round"/>
+                   <path d="M7.5 21C4.5 21 3 19 3 16" stroke="#00A868" stroke-width="3" stroke-linecap="round"/>
+                   <path d="M12 8C9 8 8 9 8 12C8 15 9 16 12 16C15 16 16 17 16 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+               </svg>
+            </div>
+            <div>
+                <span class="text-xl font-bold tracking-tight text-white">stone</span>
+                <span class="text-[10px] block text-stone-green font-bold uppercase tracking-widest -mt-1">Data Science</span>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 space-y-1" id="nav-buttons">
+            <!-- Injetado via JS -->
+        </nav>
+        
+        <!-- User Profile -->
+        <div class="mt-auto pt-6 border-t border-[#333]">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-[#333] border border-stone-green flex items-center justify-center">
+                    <span class="font-bold text-xs text-stone-green">CD</span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-white">Candidato</p>
+                    <p class="text-xs text-gray-400">Processo Seletivo</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="ml-64 flex-1 p-10 h-screen overflow-y-auto bg-[#121212]">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-10 pb-6 border-b border-[#333]">
+            <div>
+                <h2 class="text-xs font-bold text-stone-green uppercase tracking-[0.2em] mb-2">Desafio Técnico</h2>
+                <h1 class="text-3xl font-bold text-white">Estratégia de Risco & Fraude</h1>
+            </div>
+            <div class="flex gap-4">
+                <div class="flex items-center gap-2 px-3 py-1 bg-[#1A1A1A] rounded-full border border-[#333]">
+                    <span class="w-2 h-2 rounded-full bg-stone-green animate-pulse"></span>
+                    <span class="text-xs font-bold text-gray-300">Modelo em Execução</span>
+                </div>
+                <button onclick="window.print()" class="text-gray-400 hover:text-white transition-colors">
+                    <i data-lucide="printer" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- TAB: INTRODUÇÃO -->
+        <div id="intro" class="tab-content active max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="stone-card p-8 rounded-2xl border-t-4 border-stone-green">
+                    <h2 class="text-2xl font-bold mb-4">O Contexto: <span class="text-stone-green">High Ticket</span></h2>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        O cliente analisado opera no segmento premium. Com um ticket médio de <strong class="text-white">R$ 1.067</strong>, cada transação é valiosa.
+                    </p>
+                    <div class="p-4 bg-[#151515] rounded-lg border-l-2 border-stone-green">
+                        <p class="text-sm text-gray-400 italic">
+                            "Não podemos ter uma política paranoica. O custo de ofender um cliente VIP supera o risco de fraudes menores."
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
+                        <p class="text-gray-500 text-xs font-bold uppercase mb-2">Volume Analisado</p>
+                        <p class="text-2xl font-bold text-white">R$ 11.7 Mi</p>
+                    </div>
+                    <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
+                        <p class="text-gray-500 text-xs font-bold uppercase mb-2">Ticket Médio</p>
+                        <p class="text-2xl font-bold text-stone-green">R$ 1.067</p>
+                    </div>
+                    <div class="stone-card p-6 rounded-xl flex flex-col justify-center col-span-2">
+                        <p class="text-gray-500 text-xs font-bold uppercase mb-2">Insight Comportamental</p>
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="user-check" class="text-stone-green"></i>
+                            <div>
+                                <p class="font-bold text-white">Cliente Legítimo é Esporádico</p>
+                                <p class="text-xs text-gray-400">Compra uma vez e demora a voltar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: DIAGNÓSTICO -->
+        <div id="diagnosis" class="tab-content max-w-5xl mx-auto">
+            <div class="stone-card p-8 rounded-2xl mb-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
+                        <i data-lucide="siren" class="text-red-500 w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Modus Operandi: Ataque Robótico</h2>
+                        <p class="text-gray-400">Identificamos 3 pilares que compõem a assinatura da fraude.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-[#151515] p-6 rounded-xl border border-[#333]">
+                        <p class="text-stone-green font-bold text-4xl mb-2">1.8 <span class="text-sm text-gray-500 font-normal">min</span></p>
+                        <h3 class="font-bold text-white mb-2">Velocidade Extrema</h3>
+                        <p class="text-xs text-gray-400">Diferente de humanos, o fraudador testa o mesmo cartão a cada 2 minutos (ataque de força bruta).</p>
+                    </div>
+                    <div class="bg-[#151515] p-6 rounded-xl border border-[#333]">
+                        <p class="text-stone-green font-bold text-4xl mb-2">+60%</p>
+                        <h3 class="font-bold text-white mb-2">Ganância</h3>
+                        <p class="text-xs text-gray-400">Ticket médio da fraude é R$ 1.660. Tentam maximizar o roubo antes do bloqueio.</p>
+                    </div>
+                    <div class="bg-[#151515] p-6 rounded-xl border border-[#333]">
+                        <div class="text-stone-green font-bold text-4xl mb-2 flex items-center"><i data-lucide="moon" class="w-8 h-8"></i></div>
+                        <h3 class="font-bold text-white mb-2">Madrugada</h3>
+                        <p class="text-xs text-gray-400">Pico de transações fraudulentas em horários de baixa vigilância humana.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: MODELO (Aba 2) -->
+        <div id="model" class="tab-content max-w-4xl mx-auto text-center">
+            <div class="mb-12">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-stone-green/10 mb-6">
+                    <i data-lucide="brain-circuit" class="w-10 h-10 text-stone-green"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-4">A Solução: Random Forest Temporal</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Treinamos um modelo focado na variável <span class="text-white font-bold">Delta T</span> (tempo entre transações) para isolar o comportamento robótico na nova base de dados.
+                </p>
+            </div>
+
+            <div class="stone-card p-10 rounded-2xl inline-block w-full max-w-md relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-1 bg-stone-green"></div>
+                <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Resultado na Aba 2</p>
+                <div class="text-7xl font-bold text-white mb-2 group-hover:scale-110 transition-transform duration-300">194</div>
+                <p class="text-stone-green font-bold">Transações Bloqueadas</p>
+                <p class="text-xs text-gray-500 mt-4">Prevenção proativa de ataque recorrente</p>
+            </div>
+        </div>
+
+        <!-- TAB: SIMULADOR (Highlight) -->
+        <div id="simulator" class="tab-content max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Controles -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="stone-card p-6 rounded-xl border-l-4 border-stone-green">
+                        <h3 class="font-bold text-lg mb-2">Calibragem de Risco</h3>
+                        <p class="text-xs text-gray-400 mb-6">Defina o limiar de corte do modelo para balancear fraude vs. fricção.</p>
+                        
+                        <div class="mb-8">
+                            <div class="flex justify-between mb-4">
+                                <span class="text-xs font-bold text-gray-400 uppercase">Agressividade</span>
+                                <span class="text-2xl font-bold text-stone-green" id="threshold-display">87%</span>
+                            </div>
+                            <input type="range" min="50" max="99" value="87" id="threshold-slider" class="w-full">
+                            <div class="flex justify-between mt-2">
+                                <span class="text-[10px] text-gray-600">Conservador</span>
+                                <span class="text-[10px] text-gray-600">Agressivo</span>
+                            </div>
+                        </div>
+
+                        <button onclick="updateSimulator(87)" class="w-full py-3 bg-stone-green hover:bg-[#008c56] text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> Aplicar Recomendação
+                        </button>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#151515] border border-dashed border-gray-700">
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            <strong class="text-white">Por que 87%?</strong><br>
+                            Neste ponto, maximizamos o lucro líquido (R$ 461k) minimizando a perda de clientes VIPs (apenas R$ 40k de fricção).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="stone-card p-5 rounded-xl">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Lucro Líquido (Mês)</p>
+                            <p class="text-2xl font-bold text-white" id="val-net-profit">R$ 461.466</p>
+                            <div class="h-1 w-full bg-gray-800 mt-3 rounded-full overflow-hidden">
+                                <div class="h-full bg-stone-green w-[80%]"></div>
+                            </div>
+                        </div>
+                        <div class="stone-card p-5 rounded-xl">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Fraude Evitada</p>
+                            <p class="text-2xl font-bold text-blue-400" id="val-savings">R$ 501.320</p>
+                        </div>
+                        <div class="stone-card p-5 rounded-xl">
+                            <p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Vendas Perdidas</p>
+                            <p class="text-2xl font-bold text-orange-400" id="val-loss">R$ 39.854</p>
+                        </div>
+                    </div>
+
+                    <div class="stone-card p-6 rounded-xl h-[350px]">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: CHATBOT -->
+        <div id="chat" class="tab-content max-w-3xl mx-auto h-[600px] flex flex-col">
+            <div class="flex-1 stone-card rounded-t-2xl p-6 overflow-y-auto space-y-4" id="chat-messages">
+                <div class="flex justify-start">
+                    <div class="max-w-[80%] p-4 rounded-2xl bg-[#1A1A1A] border border-[#333] text-sm text-gray-300">
+                        <p class="mb-2"><strong class="text-stone-green">Stone Assistant:</strong> Olá. Sou o assistente virtual treinado nos dados do case.</p>
+                        <p>Posso responder sobre:</p>
+                        <ul class="list-disc ml-4 mt-2 space-y-1 text-xs">
+                            <li>Recomendação de corte</li>
+                            <li>Perfil da fraude</li>
+                            <li>Impacto financeiro</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CHIPS DE PERGUNTAS SÊNIOR -->
+            <div class="px-6 py-2 bg-[#1A1A1A] border-x border-[#333] flex gap-2 overflow-x-auto no-scrollbar">
+                <button onclick="askQuestion('monitorar')" class="chat-chip"><i data-lucide="activity"></i> Monitoramento em Prod</button>
+                <button onclick="askQuestion('feature_store')" class="chat-chip"><i data-lucide="database"></i> Feature Store</button>
+                <button onclick="askQuestion('shap')" class="chat-chip"><i data-lucide="search"></i> Explicabilidade (SHAP)</button>
+                <button onclick="askQuestion('retreino')" class="chat-chip"><i data-lucide="refresh-cw"></i> Retreino (Drift)</button>
+            </div>
+
+            <div class="p-4 bg-[#1A1A1A] rounded-b-2xl border-t border-[#333] flex gap-3">
+                <input type="text" id="chat-input" placeholder="Digite sua pergunta..." class="flex-1 bg-[#121212] border border-[#333] rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-stone-green" onkeypress="handleChatKey(event)">
+                <button onclick="sendMessage()" class="bg-stone-green hover:bg-[#008c56] text-white p-3 rounded-lg transition-colors">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- NAVEGAÇÃO ---
+        const tabs = [
+            { id: 'intro', icon: 'flag', label: 'Contexto' },
+            { id: 'diagnosis', icon: 'activity', label: 'Diagnóstico' },
+            { id: 'model', icon: 'cpu', label: 'Modelo AI' },
+            { id: 'simulator', icon: 'sliders', label: 'Simulador ROI' },
+            { id: 'chat', icon: 'message-square', label: 'Assistente' }
+        ];
+
+        function renderNav() {
+            const nav = document.getElementById('nav-buttons');
+            nav.innerHTML = tabs.map(tab => `
+                <button onclick="switchTab('${tab.id}')" id="btn-${tab.id}" 
+                    class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-400 hover:text-white hover:bg-[#1A1A1A] group">
+                    <i data-lucide="${tab.icon}" class="w-5 h-5 group-hover:text-stone-green transition-colors"></i>
+                    <span class="font-medium text-sm">${tab.label}</span>
+                </button>
+            `).join('');
+            lucide.createIcons();
+            switchTab('intro');
+        }
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#nav-buttons button').forEach(el => {
+                el.classList.remove('bg-[#1A1A1A]', 'text-white', 'border-l-4', 'border-stone-green');
+                el.classList.add('text-gray-400');
+                el.style.borderLeft = '4px solid transparent';
+            });
+
+            document.getElementById(id).classList.add('active');
+            const btn = document.getElementById(`btn-${id}`);
+            btn.classList.remove('text-gray-400');
+            btn.classList.add('bg-[#1A1A1A]', 'text-white');
+            btn.style.borderLeft = '4px solid #00A868'; // Marcação ativa Stone Style
+            
+            if (id === 'simulator' && !window.chartInitialized) {
+                initChart();
+                window.chartInitialized = true;
+            }
+        }
+
+        // --- SIMULADOR CORRIGIDO ---
+        const slider = document.getElementById('threshold-slider');
+        
+        slider.addEventListener('input', (e) => updateSimulator(e.target.value));
+
+        function getCalculatedValues(threshold) {
+            const savings = 662000 * (1 - Math.pow(threshold, 10)); 
+            const loss = 39854 * Math.exp(12 * (0.87 - threshold));
+            const net = savings - loss;
+            return { savings, loss, net };
+        }
+
+        function updateSimulator(val) {
+            val = Number(val);
+            slider.value = val;
+            document.getElementById('threshold-display').innerText = val + '%';
+            
+            const threshold = val / 100;
+            const values = getCalculatedValues(threshold);
+            
+            document.getElementById('val-net-profit').innerText = formatBRL(values.net);
+            document.getElementById('val-savings').innerText = formatBRL(values.savings);
+            document.getElementById('val-loss').innerText = formatBRL(values.loss);
+        }
+
+        function formatBRL(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+        }
+
+        // --- GRÁFICO SINCRONIZADO ---
+        function initChart() {
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            const labels = [];
+            const data = [];
+            
+            for (let i = 50; i <= 99; i+=1) {
+                labels.push(i + '%');
+                const t = i/100;
+                const vals = getCalculatedValues(t);
+                data.push(vals.net);
+            }
+
+            const verticalLinePlugin = {
+                id: 'verticalLine',
+                afterDraw: (chart) => {
+                    if (chart.tooltip?._active?.length) return;
+                    const ctx = chart.ctx;
+                    const x = chart.scales.x.getPixelForValue('87%');
+                    const topY = chart.scales.y.top;
+                    const bottomY = chart.scales.y.bottom;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(x, topY);
+                    ctx.lineTo(x, bottomY);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = '#00A868';
+                    ctx.setLineDash([5, 5]);
+                    ctx.stroke();
+                    ctx.restore();
+                    ctx.fillStyle = '#00A868';
+                    ctx.font = '10px Inter';
+                    ctx.fillText('Recomendação', x + 5, topY + 10);
+                }
+            };
+
+            window.chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Lucro Líquido',
+                        data: data,
+                        borderColor: '#00A868',
+                        backgroundColor: (context) => {
+                            const ctx = context.chart.ctx;
+                            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                            gradient.addColorStop(0, 'rgba(0, 168, 104, 0.4)');
+                            gradient.addColorStop(1, 'rgba(0, 168, 104, 0)');
+                            return gradient;
+                        },
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+                    scales: {
+                        y: { grid: { color: '#333' }, ticks: { color: '#666', callback: (val) => 'R$ ' + (val/1000) + 'k' } },
+                        x: { grid: { display: false }, ticks: { color: '#666', maxTicksLimit: 10 } }
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                },
+                plugins: [verticalLinePlugin]
+            });
+        }
+
+        // --- CHAT SÊNIOR ---
+        function handleChatKey(e) { if (e.key === 'Enter') sendMessage(); }
+
+        function askQuestion(type) {
+            const questions = {
+                'monitorar': 'Como vamos monitorar esse modelo em produção?',
+                'feature_store': 'Como calcular o Delta T em tempo real?',
+                'shap': 'Como explicamos uma decisão de bloqueio?',
+                'retreino': 'Quando devemos retreinar o modelo?'
+            };
+            const input = document.getElementById('chat-input');
+            input.value = questions[type];
+            // Pequeno delay visual para parecer que foi digitado
+            setTimeout(() => {
+                sendMessage();
+            }, 300);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                let response = "Desculpe, não entendi. Tente usar os botões de sugestão acima.";
+                const lower = text.toLowerCase();
+                
+                // RESPOSTAS NÍVEL SÊNIOR (Staff Data Scientist)
+                if (lower.includes('monitorar') || lower.includes('produção')) {
+                    response = "Em produção, o foco é detectar **Concept Drift**. Monitoramos a distribuição da variável <code>delta_t</code> diariamente via **KS Test** e **PSI**. Se a média de tempo entre transações legítimas cair, ou se as fraudes ficarem 'lentas' (ataque low-and-slow), o modelo dispara um alerta no Grafana para o time de Data Science.";
+                } else if (lower.includes('feature store') || lower.includes('tempo real') || lower.includes('delta t')) {
+                    response = "Para calcular o tempo desde a última compra em milissegundos, não podemos consultar o banco analítico (Snowflake/BigQuery) pela latência. Usaríamos uma **Feature Store de Baixa Latência (Redis ou DynamoDB)**. A cada transação, consultamos o timestamp da anterior (Get) e atualizamos com o novo (Set) em < 5ms.";
+                } else if (lower.includes('shap') || lower.includes('explicabilidade')) {
+                    response = "Para auditoria e atendimento ao cliente, usamos **SHAP Values**. Isso nos permite dizer: 'Bloqueamos esta transação não porque o valor era alto, mas porque a combinação de **valor alto + madrugada + intervalo curto** somou +0.8 no score de risco'. Isso garante transparência e compliance.";
+                } else if (lower.includes('retreino') || lower.includes('drift')) {
+                    response = "O retreino não deve ser apenas temporal (ex: mensal), mas gatilhado por performance. Se a métrica de **Recall** na faixa de fraude cair abaixo de 90% (monitorado via **MLflow**), disparamos uma pipeline de retreino automático com a janela de dados mais recente.";
+                } 
+                // RESPOSTAS PADRÃO DO CASE
+                else if (lower.includes('recomendação') || lower.includes('87')) {
+                    response = "Minha recomendação é conservadora: score acima de **87%** gera bloqueio. Abaixo disso, enviamos para desafio (2FA/SMS), reduzindo a fricção.";
+                } else if (lower.includes('lucro') || lower.includes('impacto')) {
+                    response = "Resultado projetado: **+R$ 461k/mês** de lucro líquido. ROI infinito dado que o custo de implementação é marginal.";
+                }
+                
+                addMessage(response, 'ai');
+            }, 800);
+        }
+
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const isUser = sender === 'user';
+            const html = `
+                <div class="flex ${isUser ? 'justify-end' : 'justify-start'}">
+                    <div class="max-w-[85%] p-4 rounded-2xl ${isUser ? 'bg-stone-green text-white' : 'bg-[#1A1A1A] border border-[#333] text-gray-300'}">
+                        <p class="text-sm leading-relaxed">${text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        renderNav();
+    </script>
+</body>
+</html>
