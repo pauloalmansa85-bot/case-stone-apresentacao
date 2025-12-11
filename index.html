@@ -3,547 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stone - Case Data Science (Resultados Finais)</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    
+    <title>Stone - Resultado Final (R$ 1.4Mi)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
     <script src="https://unpkg.com/lucide@latest"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        stone: {
-                            green: '#00A868',
-                            dark: '#1A1A1A',
-                            gray: '#2D2D2D',
-                            light: '#F5F5F5'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { background-color: #121212; color: white; font-family: 'Inter', sans-serif; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1A1A1A; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00A868; }
-
-        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
-        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
-        
-        .stone-card {
-            background: #1E1E1E;
-            border: 1px solid #333;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-        .stone-card:hover { border-color: #00A868; transform: translateY(-2px); }
-
-        /* Slider */
+        .stone-card { background: #1E1E1E; border: 1px solid #333; }
+        .negative-val { color: #ef4444; }
+        .positive-val { color: #00A868; }
         input[type=range] { -webkit-appearance: none; background: transparent; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%;
             background: #00A868; cursor: pointer; margin-top: -8px; 
-            box-shadow: 0 0 10px rgba(0, 168, 104, 0.5);
         }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%; height: 4px; cursor: pointer; background: #333; border-radius: 2px;
         }
-        .chat-chip {
-            background: rgba(26, 26, 26, 0.8); border: 1px solid #333; color: #aaa;
-            padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px;
-        }
-        .chat-chip:hover { background: rgba(0, 168, 104, 0.1); border-color: #00A868; color: #00A868; transform: translateY(-1px); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="flex min-h-screen text-slate-100 selection:bg-stone-green selection:text-white overflow-hidden">
+<body class="flex min-h-screen p-8 justify-center">
 
-    <div id="app-container" class="flex w-full h-screen">
-        <aside class="w-64 h-full bg-[#151515] border-r border-[#333] flex flex-col p-6 z-30 shadow-2xl">
-            <div class="flex items-center gap-2 mb-12">
-                <div class="relative w-8 h-8 flex items-center justify-center">
-                   <svg viewBox="0 0 24 24" fill="none" class="w-full h-full text-stone-green">
-                       <path d="M16.5 3C19.5 3 21 5 21 8" stroke="#00A868" stroke-width="3" stroke-linecap="round"/>
-                       <path d="M7.5 21C4.5 21 3 19 3 16" stroke="#00A868" stroke-width="3" stroke-linecap="round"/>
-                       <path d="M12 8C9 8 8 9 8 12C8 15 9 16 12 16C15 16 16 17 16 20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                   </svg>
-                </div>
-                <div>
-                    <span class="text-xl font-bold tracking-tight text-white">stone</span>
-                    <span class="text-[10px] block text-stone-green font-bold uppercase tracking-widest -mt-1">Data Science</span>
-                </div>
+    <div class="max-w-6xl w-full space-y-8">
+        <header class="flex justify-between items-end border-b border-[#333] pb-6">
+            <div>
+                <h2 class="text-xs font-bold text-stone-green uppercase tracking-widest mb-1">Resultado Final da Análise</h2>
+                <h1 class="text-3xl font-bold">Estratégia de Risco</h1>
             </div>
-            
-            <nav class="flex-1 space-y-1" id="nav-buttons"></nav>
-            
-            <div class="mt-auto pt-6 border-t border-[#333]">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[#333] border border-stone-green flex items-center justify-center">
-                        <span class="font-bold text-xs text-stone-green">CD</span>
-                    </div>
-                    <div>
-                        <p class="text-sm font-bold text-white">Paulo</p>
-                        <p class="text-xs text-gray-400">Data Scientist</p>
-                    </div>
-                </div>
+            <div class="text-right">
+                <p class="text-xs text-gray-500 uppercase">Volume Analisado</p>
+                <p class="text-xl font-bold">R$ 1.430.780,00</p>
             </div>
-        </aside>
+        </header>
 
-        <main class="flex-1 p-10 h-full overflow-y-auto bg-[#121212]">
-            <header class="flex justify-between items-center mb-10 pb-6 border-b border-[#333]">
-                <div>
-                    <h2 class="text-xs font-bold text-stone-green uppercase tracking-[0.2em] mb-2">Desafio Técnico - Finalizado</h2>
-                    <h1 class="text-3xl font-bold text-white">Estratégia de Risco & Fraude</h1>
-                </div>
-                <div class="flex gap-4">
-                    <div class="flex items-center gap-2 px-3 py-1 bg-[#1A1A1A] rounded-full border border-[#333]">
-                        <span class="w-2 h-2 rounded-full bg-stone-green"></span>
-                        <span class="text-xs font-bold text-gray-300">Analysis Complete</span>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="stone-card p-6 rounded-xl">
+                <p class="text-[10px] text-gray-500 uppercase font-bold">Ticket Médio</p>
+                <p class="text-2xl font-bold text-white">R$ 130,02</p>
+                <p class="text-xs text-gray-400 mt-1">Varejo Padrão</p>
+            </div>
+            <div class="stone-card p-6 rounded-xl">
+                <p class="text-[10px] text-gray-500 uppercase font-bold">Modelo (AUC)</p>
+                <p class="text-2xl font-bold text-stone-green">0.8859</p>
+                <p class="text-xs text-gray-400 mt-1">Alta Performance</p>
+            </div>
+            <div class="stone-card p-6 rounded-xl border border-stone-green/30 bg-stone-green/5">
+                <p class="text-[10px] text-stone-green uppercase font-bold">Bloqueios (Aba 2)</p>
+                <p class="text-2xl font-bold text-white">242</p>
+                <p class="text-xs text-stone-green mt-1">Transações Evitadas</p>
+            </div>
+             <div class="stone-card p-6 rounded-xl">
+                <p class="text-[10px] text-gray-500 uppercase font-bold">Lucro Projetado (87%)</p>
+                <p class="text-2xl font-bold text-stone-green">+ R$ 44.990</p>
+                <p class="text-xs text-gray-400 mt-1">vs R$ -40k no padrão</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="col-span-1 space-y-6">
+                <div class="stone-card p-6 rounded-xl border-l-4 border-stone-green">
+                    <h3 class="font-bold text-lg mb-4">Simulador de Decisão</h3>
+                    
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-xs text-gray-400 uppercase">Rigor do Modelo</span>
+                            <span class="text-xl font-bold text-stone-green" id="lbl-threshold">87%</span>
+                        </div>
+                        <input type="range" id="slider" min="50" max="95" value="87" class="w-full">
                     </div>
-                    <button onclick="window.print()" class="text-gray-400 hover:text-white transition-colors">
-                        <i data-lucide="printer" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </header>
 
-            <div id="intro" class="tab-content active max-w-5xl mx-auto">
-                </div>
-            <div id="diagnosis" class="tab-content max-w-6xl mx-auto"></div>
-            <div id="model" class="tab-content max-w-6xl mx-auto"></div>
-            <div id="simulator" class="tab-content max-w-6xl mx-auto"></div>
-            <div id="chat" class="tab-content max-w-3xl mx-auto h-[600px] flex flex-col">
-                <div class="flex-1 stone-card rounded-t-2xl p-6 overflow-y-auto space-y-4" id="chat-messages">
-                    <div class="flex justify-start">
-                        <div class="max-w-[80%] p-4 rounded-2xl bg-[#1A1A1A] border border-[#333] text-sm text-gray-300">
-                            <p class="mb-2"><strong class="text-stone-green">Stone Assistant:</strong> Olá Paulo. Carreguei os resultados finais da sua análise (AUC 0.88). Como posso ajudar na apresentação?</p>
+                    <div class="space-y-3 pt-4 border-t border-[#333]">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-400">Fraude Evitada</span>
+                            <span class="font-bold text-blue-400" id="val-savings">R$ 55.840</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-400">Vendas Perdidas</span>
+                            <span class="font-bold text-red-400" id="val-loss">R$ 10.849</span>
+                        </div>
+                        <div class="flex justify-between items-center bg-[#151515] p-3 rounded-lg mt-2">
+                            <span class="text-sm font-bold text-white">Resultado Líquido</span>
+                            <span class="font-bold text-xl text-stone-green" id="val-net">R$ 44.990</span>
                         </div>
                     </div>
                 </div>
-                <div class="px-6 py-2 bg-[#1A1A1A] border-x border-[#333] flex gap-2 overflow-x-auto no-scrollbar">
-                    <button onclick="askQuestion('metricas')" class="chat-chip"><i data-lucide="bar-chart-2"></i> Métricas</button>
-                    <button onclick="askQuestion('financeiro')" class="chat-chip"><i data-lucide="dollar-sign"></i> Impacto Financeiro</button>
-                    <button onclick="askQuestion('feature')" class="chat-chip"><i data-lucide="cpu"></i> Features</button>
-                </div>
-                <div class="p-4 bg-[#1A1A1A] rounded-b-2xl border-t border-[#333] flex gap-3">
-                    <input type="text" id="chat-input" placeholder="Digite sua pergunta..." class="flex-1 bg-[#121212] border border-[#333] rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-stone-green" onkeypress="handleChatKey(event)">
-                    <button onclick="sendMessage()" class="bg-stone-green hover:bg-[#008c56] text-white p-3 rounded-lg transition-colors">
-                        <i data-lucide="send" class="w-5 h-5"></i>
-                    </button>
+
+                <div class="p-4 bg-red-900/20 border border-red-900/50 rounded-xl" id="warning-box" style="display:none">
+                    <div class="flex gap-3">
+                        <i data-lucide="alert-triangle" class="text-red-500 w-5 h-5"></i>
+                        <p class="text-xs text-red-200 leading-relaxed">
+                            <strong>Cuidado:</strong> Com rigor baixo, o número de falsos positivos explode. O prejuízo supera a economia.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </main>
+
+            <div class="col-span-2 stone-card p-6 rounded-xl flex flex-col">
+                <h3 class="text-sm font-bold text-gray-400 uppercase mb-4">Curva de Lucratividade (R$)</h3>
+                <div class="flex-1 relative">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- DADOS DA ANÁLISE (HARDCODED) ---
-        const ANALYTICS = {
-            train_count: 11004,
-            prod_count: 11820,
-            ticket_legit: 1034.73,
-            ticket_fraud: 1660.24,
-            total_volume: 12543200.00, // Estimativa baseada no ticket * volume
-            auc: 0.8844,
-            prod_blocked: 200, // Bloqueios na aba 2
-            impact_87: {
-                savings: 635751.00,
-                loss: 174995.00,
-                net: 460756.00
-            },
-            impact_50: {
-                savings: 692367.00,
-                loss: 389439.00,
-                net: 302928.00
-            }
-        };
+        lucide.createIcons();
 
-        // --- INICIALIZAÇÃO ---
-        window.onload = function() {
-            lucide.createIcons();
-            renderNav();
-            populateIntro();
-            populateDiagnosis();
-            populateModel();
-            populateSimulator();
-        };
+        // DADOS REAIS EXTRAÍDOS DO SEU PYTHON
+        // 50% -> Net: -40.927
+        // 87% -> Net: +44.990
+        // Ponto de virada (Zero) acontece por volta de 65-70%
+        
+        const slider = document.getElementById('slider');
+        const lblThreshold = document.getElementById('lbl-threshold');
+        const valSavings = document.getElementById('val-savings');
+        const valLoss = document.getElementById('val-loss');
+        const valNet = document.getElementById('val-net');
+        const warningBox = document.getElementById('warning-box');
 
-        // --- POPULATE FUNCTIONS ---
-        function populateIntro() {
-            document.getElementById('intro').innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <div class="stone-card p-8 rounded-2xl border-t-4 border-stone-green">
-                        <h2 class="text-2xl font-bold mb-4">Contexto: <span class="text-stone-green">Análise de Dados</span></h2>
-                        <p class="text-gray-300 leading-relaxed mb-6">
-                            Base de Treino processada com <strong>${ANALYTICS.train_count.toLocaleString()}</strong> transações.
-                            Identificamos um padrão claro onde fraudadores buscam tickets <strong>60% maiores</strong> que a média.
-                        </p>
-                        <div class="p-4 bg-[#151515] rounded-lg border-l-2 border-stone-green grid grid-cols-2 gap-4">
-                             <div>
-                                <p class="text-xs text-gray-500 uppercase">Ticket Legítimo</p>
-                                <p class="text-lg font-bold text-white">R$ 1.034,73</p>
-                             </div>
-                             <div>
-                                <p class="text-xs text-gray-500 uppercase">Ticket Fraude</p>
-                                <p class="text-lg font-bold text-red-400">R$ 1.660,24</p>
-                             </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Transações Prod (Aba 2)</p>
-                            <p class="text-2xl font-bold text-white">${ANALYTICS.prod_count.toLocaleString()}</p>
-                        </div>
-                        <div class="stone-card p-6 rounded-xl flex flex-col justify-center">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">AUC (Modelo)</p>
-                            <p class="text-2xl font-bold text-stone-green">${ANALYTICS.auc}</p>
-                        </div>
-                        <div class="stone-card p-6 rounded-xl flex flex-col justify-center col-span-2">
-                            <p class="text-gray-500 text-xs font-bold uppercase mb-2">Insight Principal</p>
-                            <div class="flex items-center gap-3">
-                                <i data-lucide="zap" class="text-stone-green"></i>
-                                <div><p class="font-bold text-white">Delta T (Tempo entre compras)</p><p class="text-xs text-gray-400">Responsável por 73% da decisão do modelo.</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
-        function populateDiagnosis() {
-            document.getElementById('diagnosis').innerHTML = `
-                <div class="stone-card p-8 rounded-2xl mb-8">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center"><i data-lucide="siren" class="text-red-500 w-6 h-6"></i></div>
-                        <div><h2 class="text-2xl font-bold">Perfil da Fraude</h2><p class="text-gray-400">Comparativo Legítimo vs Fraude</p></div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">R$ 1.6k</p><h3 class="font-bold text-white">Ticket Médio</h3></div>
-                            <div class="flex-1 relative h-32"><canvas id="valueChart"></canvas></div>
-                        </div>
-                        <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><p class="text-stone-green font-bold text-4xl mb-1">73%</p><h3 class="font-bold text-white">Importância do Tempo</h3></div>
-                            <div class="flex-1 relative h-32"><canvas id="featureChart"></canvas></div>
-                        </div>
-                        <div class="bg-[#151515] p-6 rounded-xl border border-[#333] flex flex-col">
-                            <div class="mb-4"><div class="text-stone-green font-bold text-4xl mb-1 flex items-center"><i data-lucide="moon" class="w-8 h-8 mr-2"></i> Alta</div><h3 class="font-bold text-white">Incidência Madrugada</h3></div>
-                            <div class="flex-1 relative h-32"><canvas id="hourChart"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-            setTimeout(initDiagCharts, 100); 
-        }
-
-        function populateModel() {
-            document.getElementById('model').innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-7 space-y-6">
-                        <div class="stone-card p-8 rounded-2xl">
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-12 h-12 rounded-full bg-stone-green/10 flex items-center justify-center"><i data-lucide="network" class="text-stone-green w-6 h-6"></i></div>
-                                <div><h2 class="text-2xl font-bold">Random Forest (Treinado)</h2><p class="text-gray-400 text-sm">AUC-ROC: 0.8844</p></div>
-                            </div>
-                            <div class="bg-[#151515] p-4 rounded-xl border-l-2 border-stone-green">
-                                <h4 class="font-bold text-white mb-1">Lógica de Bloqueio</h4>
-                                <p class="text-sm text-gray-400 leading-relaxed">
-                                    O modelo identificou que transações rápidas (baixo Delta T) combinadas com valores acima de R$ 1.500 possuem altíssima probabilidade de fraude.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="stone-card p-6 rounded-2xl h-[320px] flex flex-col">
-                            <h3 class="font-bold text-lg text-white mb-4">Importância das Variáveis (SHAP Proxy)</h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Delta T (Tempo)</span><span>73.4%</span></div>
-                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-stone-green h-2 rounded-full" style="width: 73.4%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Amount (Valor)</span><span>18.0%</span></div>
-                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 18%"></div></div>
-                                </div>
-                                <div>
-                                    <div class="flex justify-between text-xs mb-1"><span class="text-white">Hour (Hora)</span><span>8.6%</span></div>
-                                    <div class="w-full bg-[#333] rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 8.6%"></div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-5">
-                         <div class="stone-card p-8 rounded-2xl relative overflow-hidden group border-t-4 border-red-500 bg-[#1A1A1A] h-full flex flex-col justify-center">
-                            <div class="absolute top-0 left-0 w-full h-full bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 text-center border-b border-[#333] pb-2">Funil de Produção (Aba 2)</h3>
-                            <div class="space-y-8 relative z-10 px-4">
-                                <div class="flex items-center justify-between opacity-50">
-                                    <div><p class="text-2xl font-bold text-white">11.820</p><p class="text-[10px] text-gray-400">Transações Analisadas</p></div>
-                                    <span class="text-xs text-gray-500 font-bold">Total</span>
-                                </div>
-                                <div class="flex justify-center"><i data-lucide="arrow-down" class="text-gray-600 w-6 h-6"></i></div>
-                                <div class="flex items-center justify-between">
-                                    <div><p class="text-5xl font-bold text-stone-green" id="blocked-count">${ANALYTICS.prod_blocked}</p><p class="text-xs text-stone-green font-bold">Bloqueios Reais (>87%)</p></div>
-                                    <i data-lucide="shield-alert" class="text-stone-green w-10 h-10"></i>
-                                </div>
-                            </div>
-                            <div class="mt-8 pt-4 border-t border-[#333] text-left">
-                                <p class="text-xs text-gray-300 leading-relaxed">
-                                    Este corte cirúrgico (1.7% da base) protege o lucro líquido sem causar fricção excessiva em bons clientes.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
-        function populateSimulator() {
-            document.getElementById('simulator').innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div class="lg:col-span-4 space-y-6">
-                        <div class="stone-card p-6 rounded-xl border-l-4 border-stone-green">
-                            <h3 class="font-bold text-lg mb-2">Simulador P&L</h3>
-                            <div class="mb-8">
-                                <div class="flex justify-between mb-4">
-                                    <span class="text-xs font-bold text-gray-400 uppercase">Threshold (Corte)</span>
-                                    <span class="text-2xl font-bold text-stone-green" id="threshold-display">87%</span>
-                                </div>
-                                <input type="range" min="50" max="95" value="87" id="threshold-slider" class="w-full">
-                            </div>
-                            <button onclick="updateSimulator(87)" class="w-full py-3 bg-stone-green hover:bg-[#008c56] text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="target" class="w-4 h-4"></i> Resetar (Ponto Ótimo)
-                            </button>
-                        </div>
-                        <div class="p-4 rounded-xl bg-[#151515] border border-dashed border-gray-700">
-                            <p class="text-xs text-gray-400 leading-relaxed"><strong class="text-white">Cenário Otimista:</strong> Maximiza o lucro líquido (Net Profit) minimizando falsos positivos.</p>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-8 space-y-6">
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Lucro Líquido</p><p class="text-2xl font-bold text-white" id="val-net-profit">R$ --</p></div>
-                            <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Fraude Evitada</p><p class="text-2xl font-bold text-blue-400" id="val-savings">R$ --</p></div>
-                            <div class="stone-card p-5 rounded-xl"><p class="text-[10px] font-bold text-gray-500 uppercase mb-1">Falsos Positivos (Perda)</p><p class="text-2xl font-bold text-orange-400" id="val-loss">R$ --</p></div>
-                        </div>
-                        <div class="stone-card p-6 rounded-xl h-[350px]"><canvas id="profitChart"></canvas></div>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
+        // Função de Interpolação Linear para simular os valores entre 50% e 95%
+        function calculateValues(t) {
+            // Savings: Cai suavemente conforme aumentamos o threshold (deixamos passar algumas fraudes)
+            // De 81k (50%) para 55k (87%)
+            const savings = 81000 - ((t - 50) / 37) * (81000 - 55840);
             
-            const slider = document.getElementById('threshold-slider');
-            slider.addEventListener('input', (e) => updateSimulator(e.target.value));
+            // Loss: Cai drasticamente (paramos de bloquear cliente bom)
+            // De 122k (50%) para 10k (87%)
+            const loss = 122000 - ((t - 50) / 37) * (122000 - 10849);
             
-            setTimeout(() => {
-                initProfitChart();
-                updateSimulator(87); 
-            }, 100);
-        }
+            // Ajuste fino para curva depois de 87% (Queda brusca)
+            let finalSavings = savings;
+            if(t > 87) finalSavings = savings * (1 - (t-87)*0.15); // Penalidade rápida
 
-        // --- LÓGICA DE SIMULAÇÃO (Interpolada baseada nos dados do usuário) ---
-        function updateSimulator(val) {
-            val = Number(val);
-            document.getElementById('threshold-slider').value = val;
-            document.getElementById('threshold-display').innerText = val + '%';
-            
-            // Interpolação simples entre o ponto 50% e o ponto 87% (e declínio após 90%)
-            // Dados 50%: Net 302k, Savings 692k, Loss 389k
-            // Dados 87%: Net 460k, Savings 635k, Loss 175k
-            
-            let savings, loss, net;
-            
-            if (val <= 87) {
-                // Interpolação linear entre 50 e 87
-                const ratio = (val - 50) / (87 - 50);
-                savings = 692367 - (ratio * (692367 - 635751)); // Cai levemente
-                loss = 389439 - (ratio * (389439 - 174995)); // Cai drasticamente (Bom)
-            } else {
-                // Acima de 87, savings cai muito rápido (deixamos passar fraude) e loss zera
-                const ratio = (val - 87) / (100 - 87);
-                savings = 635751 * (1 - ratio * 0.8); 
-                loss = 174995 * (1 - ratio);
-            }
-            
-            net = savings - loss;
-            
-            document.getElementById('val-net-profit').innerText = formatMoney(net);
-            document.getElementById('val-savings').innerText = formatMoney(savings);
-            document.getElementById('val-loss').innerText = formatMoney(loss);
-        }
-
-        // --- CHARTS & HELPERS ---
-        function formatMoney(val) { return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
-
-        function renderNav() {
-            const tabs = [
-                { id: 'intro', icon: 'flag', label: 'Contexto' },
-                { id: 'diagnosis', icon: 'activity', label: 'Diagnóstico' },
-                { id: 'model', icon: 'cpu', label: 'Modelo AI' },
-                { id: 'simulator', icon: 'sliders', label: 'Simulador' },
-                { id: 'chat', icon: 'message-square', label: 'Assistente' }
-            ];
-            document.getElementById('nav-buttons').innerHTML = tabs.map(t => `
-                <button onclick="switchTab('${t.id}')" id="btn-${t.id}" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-400 hover:text-white hover:bg-[#1A1A1A] group">
-                    <i data-lucide="${t.icon}" class="w-5 h-5 group-hover:text-stone-green"></i><span class="font-medium text-sm">${t.label}</span>
-                </button>
-            `).join('');
-            lucide.createIcons();
-            switchTab('intro');
-        }
-
-        function switchTab(id) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('#nav-buttons button').forEach(el => {
-                el.classList.remove('bg-[#1A1A1A]', 'text-white', 'border-l-4', 'border-stone-green');
-                el.classList.add('text-gray-400');
-                el.style.borderLeft = '4px solid transparent';
-            });
-            document.getElementById(id).classList.add('active');
-            const btn = document.getElementById(`btn-${id}`);
-            btn.classList.remove('text-gray-400'); btn.classList.add('bg-[#1A1A1A]', 'text-white'); btn.style.borderLeft = '4px solid #00A868';
-        }
-
-        function initDiagCharts() {
-            // Chart Value (Ticket Médio)
-            new Chart(document.getElementById('valueChart'), { 
-                type: 'bar', 
-                data: { 
-                    labels: ['Legítimo', 'Fraude'], 
-                    datasets: [{ 
-                        data: [ANALYTICS.ticket_legit, ANALYTICS.ticket_fraud], 
-                        backgroundColor: ['#3b82f6', '#ef4444'],
-                        borderRadius: 4
-                    }] 
-                }, 
-                options: { 
-                    responsive: true, 
-                    plugins: { legend: { display: false } },
-                    scales: { y: { grid: { color: '#333' }, ticks: { color: '#888' } }, x: { ticks: { color: '#fff' } } }
-                } 
-            });
-
-            // Chart Feature (Horizontal) - Simplificado
-            new Chart(document.getElementById('featureChart'), { 
-                type: 'bar', 
-                data: { 
-                    labels: ['Delta T (Min)', 'Outros'], 
-                    datasets: [{ 
-                        data: [73.4, 26.6], 
-                        backgroundColor: ['#00A868', '#333'],
-                        borderRadius: 4
-                    }] 
-                }, 
-                options: { 
-                    indexAxis: 'y',
-                    responsive: true, 
-                    plugins: { legend: { display: false } }, 
-                    scales: { x: { display: false }, y: { ticks: { color: 'white' } } } 
-                } 
-            });
-
-            // Chart Hour
-            new Chart(document.getElementById('hourChart'), { 
-                type: 'line', 
-                data: { 
-                    labels: ['0h','6h','12h','18h','23h'], 
-                    datasets: [{ label: 'Risco', data: [90, 20, 10, 30, 80], borderColor: '#ef4444', fill: true, backgroundColor: 'rgba(239, 68, 68, 0.1)' }] 
-                }, 
-                options: { 
-                    responsive: true, 
-                    plugins: { legend: { display: false } }, 
-                    scales: { y: { display: false }, x: { ticks: { color: '#888' } } } 
-                } 
-            });
-        }
-
-        function initProfitChart() {
-            const ctx = document.getElementById('profitChart').getContext('2d');
-            const labels = []; const data = [];
-            
-            // Gera curva baseada na lógica do updateSimulator
-            for(let i=50; i<=95; i+=2) {
-                labels.push(i + '%');
-                // Copia da lógica do updateSimulator para gerar o array
-                let s, l;
-                if (i <= 87) {
-                    const r = (i - 50) / (87 - 50);
-                    s = 692367 - (r * (692367 - 635751)); 
-                    l = 389439 - (r * (389439 - 174995));
-                } else {
-                    const r = (i - 87) / (100 - 87);
-                    s = 635751 * (1 - r * 0.8); 
-                    l = 174995 * (1 - r);
-                }
-                data.push(s - l);
-            }
-            
-            new Chart(ctx, { 
-                type: 'line', 
-                data: { 
-                    labels: labels, 
-                    datasets: [{ 
-                        label: 'Lucro Líquido', 
-                        data: data, 
-                        borderColor: '#00A868', 
-                        backgroundColor: 'rgba(0,168,104,0.2)', 
-                        fill: true, 
-                        pointRadius: 4,
-                        pointHoverRadius: 8
-                    }] 
-                }, 
-                options: { 
-                    responsive: true, 
-                    plugins: { legend: { display: false } }, 
-                    scales: { x: { grid: { display: false }, ticks: { color: '#888' } }, y: { grid: { color: '#333' }, ticks: { color: '#888' } } } 
-                } 
-            });
-        }
-
-        // --- CHAT ---
-        function handleChatKey(e) { if(e.key === 'Enter') sendMessage(); }
-        function askQuestion(t) { 
-            const m = {
-                'metricas': 'Quais as principais métricas do modelo?', 
-                'financeiro': 'Qual o impacto financeiro final?', 
-                'feature': 'O que mais impacta a fraude?'
+            return {
+                savings: finalSavings,
+                loss: loss,
+                net: finalSavings - loss
             };
-            document.getElementById('chat-input').value = m[t]; setTimeout(sendMessage, 300);
         }
-        function sendMessage() {
-            const i = document.getElementById('chat-input'); const t = i.value.trim(); if(!t) return;
-            addMessage(t, 'user'); i.value = '';
-            setTimeout(() => {
-                let r = "Não entendi.";
-                const l = t.toLowerCase();
-                if(l.includes('metricas') || l.includes('modelo')) r = "Nosso Random Forest alcançou **AUC de 0.88**. Na base de produção, sugerimos bloquear **200 transações** suspeitas.";
-                else if(l.includes('financeiro') || l.includes('impacto')) r = "Com o threshold de 87%, alcançamos o lucro máximo de **R$ 460.756**, economizando R$ 635k em fraudes.";
-                else if(l.includes('feature') || l.includes('impacta')) r = "A variável **Delta T** (tempo entre compras) é a mais forte (73%), seguida pelo Valor da transação.";
-                else r = "Estou configurado com os dados finais da análise. Posso detalhar o lucro ou as variáveis.";
-                addMessage(r, 'ai');
-            }, 800);
+
+        function updateUI(val) {
+            const data = calculateValues(val);
+            
+            lblThreshold.innerText = val + '%';
+            valSavings.innerText = data.savings.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            valLoss.innerText = data.loss.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            
+            const netEl = valNet;
+            netEl.innerText = data.net.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            
+            if(data.net < 0) {
+                netEl.classList.remove('positive-val');
+                netEl.classList.add('negative-val');
+                warningBox.style.display = 'block';
+            } else {
+                netEl.classList.remove('negative-val');
+                netEl.classList.add('positive-val');
+                warningBox.style.display = 'none';
+            }
         }
-        function addMessage(txt, sender) {
-            const div = document.createElement('div'); div.className = `flex ${sender==='user'?'justify-end':'justify-start'}`;
-            div.innerHTML = `<div class="max-w-[85%] p-4 rounded-2xl ${sender==='user'?'bg-stone-green text-white':'bg-[#1A1A1A] border border-[#333] text-gray-300'}"><p class="text-sm">${txt}</p></div>`;
-            document.getElementById('chat-messages').append(div);
-            // Scroll to bottom
-            const container = document.getElementById('chat-messages');
-            container.scrollTop = container.scrollHeight;
+
+        // Init Chart
+        const ctx = document.getElementById('profitChart').getContext('2d');
+        const labels = [];
+        const dataPoints = [];
+        const bgColors = [];
+
+        for(let i=50; i<=95; i+=2) {
+            labels.push(i + '%');
+            const res = calculateValues(i);
+            dataPoints.push(res.net);
+            bgColors.push(res.net >= 0 ? '#00A868' : '#ef4444');
         }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Lucro Líquido',
+                    data: dataPoints,
+                    backgroundColor: bgColors,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { 
+                        grid: { color: '#333' },
+                        ticks: { color: '#888', callback: function(value) { return 'R$ ' + value/1000 + 'k'; } } 
+                    },
+                    x: { grid: { display: false }, ticks: { color: '#888' } }
+                }
+            }
+        });
+
+        slider.addEventListener('input', (e) => updateUI(e.target.value));
     </script>
 </body>
 </html>
