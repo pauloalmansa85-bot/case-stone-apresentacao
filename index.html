@@ -508,23 +508,21 @@
         slider.addEventListener('input', (e) => updateSimulator(e.target.value));
 
         function getCalculatedValues(threshold) {
-            // Modelo calibrado para atingir os números exatos do case em 87%
+            // Fórmulas recalibradas para garantir continuidade (sem saltos "do nada")
+            // Usamos o ponto 0.87 como âncora matemática (Pivot)
             
-            // Fraude Evitada (Savings)
-            // Lógica: Cai suavemente se threshold sobe muito (deixa passar fraude)
-            const fraudSensitivity = 1 / (1 + Math.exp(15 * (threshold - 0.94))); 
-            const savings = 662000 * fraudSensitivity; 
+            // 1. Fraude Evitada (Savings)
+            // Curva Sigmoide ajustada para passar exatamente em ~501k no ponto 0.87
+            // e cair suavemente perto de 1.0
+            const maxFraud = 662000;
+            const savings = maxFraud / (1 + Math.exp(15 * (threshold - 0.946)));
 
-            // Vendas Perdidas (Loss)
-            // Lógica: Cai exponencialmente conforme threshold sobe (libera mais clientes)
-            const legitBlockRate = Math.exp(-20 * (threshold - 0.4));
-            const loss = 11000000 * legitBlockRate; 
+            // 2. Vendas Perdidas (Loss)
+            // Curva Exponencial ancorada em R$ 39.854 no ponto 0.87
+            // Se subir o threshold (mais permissivo), a perda cai suavemente.
+            // Se descer (mais rigoroso), a perda sobe exponencialmente.
+            const loss = 39854 * Math.exp(15 * (0.87 - threshold));
             
-            // Hardcode do Ponto Ótimo (87%) conforme o case
-            if (threshold >= 0.865 && threshold <= 0.875) {
-                return { savings: 501320, loss: 39854, net: 461466 };
-            }
-
             const net = savings - loss;
             return { savings, loss, net };
         }
